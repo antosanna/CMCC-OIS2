@@ -1,0 +1,1 @@
+ifort -I$NETCDF/include read.F90 -L$NETCDF/lib -lnetcdf -lnetcdff -o read.x

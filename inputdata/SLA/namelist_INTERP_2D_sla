@@ -1,0 +1,68 @@
+!! -------------------
+!! Namelist for SOSIE
+!! -------------------
+!!
+!! EXAMPLE 3:
+!! #########
+!!
+!!
+&ndom_src
+csource    = 'reg'
+ivect      = 0
+l_reg_src  = .true.    ! ORCA grid is irregular
+cf_src     = '_FILENAME_'
+cv_src     = 'sla'
+cv_t_src   = 'time'
+cf_x_src   = '_FILENAME_'
+cv_lon_src = 'longitude'
+cv_lat_src = 'latitude'
+cf_lsm_src = 'missing_value'
+cv_lsm_src = 'missing_value'
+ewper_src  = 0
+!! Only required if 3D interpolation (jplev==0):
+/
+!!
+!!
+&ndom_trg
+ctarget  = 'eORCA25'
+l_reg_trg  = .flase.
+cf_x_trg   = 'mesh_out.nc'
+cv_lon_trg = 'nav_lon'
+cv_lat_trg = 'nav_lat'
+cf_lsm_trg = 'mesh_out.nc'
+cv_lsm_trg = 'tmaskutil'
+ewper_trg  = 2
+!! Only required if 3D interpolation (jplev==0):
+/
+!!
+!!
+&ninterp
+cmethod  = 'akima'
+!!
+idrown      = 50,20
+l_save_drwn = .false.
+ismooth     = 0
+jt1         = 1    ! we want to interpolate each time record
+jt2         = 1    !           //
+jplev       = 1
+vmax        =  1.E6
+vmin        = -1.E6
+ismooth_out = 0
+/
+!!
+!!
+&noutput
+cv_out    = 'sla'
+cu_out    = 'm'
+cln_out   = ''
+cv_t_out  = 'time'
+cd_out    = '.'
+cextra    = '_DATEE_'
+lmout     = .true.
+rmiss_val = -9999.
+lct       = .true.      ! we use time from input file
+t0        = 1
+t_stp     = 1
+!! Only required if 3D interpolation (jplev==0):
+/
+!!

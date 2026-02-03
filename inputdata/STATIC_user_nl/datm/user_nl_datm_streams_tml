@@ -1,0 +1,21 @@
+!
+ERA5.PERT_PREC:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_precip_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_precip_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_precip_y_YYYYp8_m_MMp8_.nc
+!ERA5.PERT_PREC:datavars=precip precip_pert
+ERA5.PERT_PREC:dtlimit=999.
+ERA5.PERT_LWRD:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_lwrd_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_lwrd_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_lwrd_y_YYYYp8_m_MMp8_.nc
+!ERA5.PERT_LWRD:datavars=lwrd lwrd_pert
+ERA5.PERT_LWRD:dtlimit=999.
+ERA5.PERT_SWRD:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_swrd_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_swrd_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_swrd_y_YYYYp8_m_MMp8_.nc
+ERA5.PERT_SWRD:dtlimit=999.
+!ERA5.PERT_SWRD:datavars=swrd swrd_pert
+ERA5.PERT_Q10M:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_q2m_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_q2m_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_q2m_y_YYYYp8_m_MMp8_.nc
+ERA5.PERT_Q10M:dtlimit=999.
+ERA5.PERT_Q10M:datavars=q2m q10m_pert
+ERA5.PERT_T10M:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_t2m_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_t2m_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_t2m_y_YYYYp8_m_MMp8_.nc
+ERA5.PERT_T10M:dtlimit=999.
+ERA5.PERT_T10M:datavars=t2m t10m_pert
+ERA5.PERT_UV10:datafiles=/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_wind10m_y_YYYYm1_m_MMm1_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_wind10m_y_YYYY_m_MM_.nc,/work/cmcc/aspect/CESM2/inputdata/ERA5_PERT/INTERP/P8/ANOM_ECMWF_p8_wind10m_y_YYYYp8_m_MMp8_.nc
+ERA5.PERT_UV10:dtlimit=999.
+!ERA5.PERT_UV10:datavars=u10m u10m_pert,v10m v10m_pert
+!
+

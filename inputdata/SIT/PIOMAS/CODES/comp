@@ -1,0 +1,9 @@
+#!/bin/ksh
+set -x
+   ifort -I$NETCDF/include -c writenc.F90 || exit -1
+   ifort -I$NETCDF/include -c conv.F90  || exit -1
+   ifort -o conv.x -L$NETCDF/lib -lnetcdf -lnetcdff conv.o writenc.o 
+
+   ifort -I$NETCDF/include -c writenc.F90 || exit -1
+   ifort -I$NETCDF/include -c conv_a.F90  || exit -1
+   ifort -o conv_a.x -L$NETCDF/lib -lnetcdf -lnetcdff conv_a.o writenc.o 

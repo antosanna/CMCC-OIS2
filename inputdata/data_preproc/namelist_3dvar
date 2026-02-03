@@ -1,0 +1,321 @@
+!-----------------------------------------------
+! GLOCEANVAR NAMELIST
+!-----------------------------------------------
+!
+! NAMELIST RUNLST
+! ---
+&RUNLST
+   NCONF = _NCONF_
+   NSUBDOMAINS = _NCPU_
+   LL_NOFGAT = .FALSE.
+   LLVARMDT = .FALSE.
+/
+&STVLST
+   LL_TS = .TRUE.
+   LL_UV = .FALSE.
+   LL_SSH= .FALSE.
+   LL_SST= .FALSE.
+   LL_SSS= .FALSE.
+/
+!-----------------------------------------------
+!
+! NAMELIST EXTLST
+! ---
+&EXTLST
+   NWRAPS  = 24
+   LLDUPLOBS= .TRUE.
+/
+!-----------------------------------------------
+!
+! NAMELIST ANPPLST
+! ---
+&ANPPLST
+   LL_BOUNDANAL = .FALSE.
+   ZANMAXTEM = 6.0
+   ZANMAXSAL = 2.0
+   LLSHAPIROANL = .FALSE.
+   NN_ITERSHAP = 6
+   LL_IAU = .TRUE.
+   LL_BOTTOMFILTER = .TRUE.
+   LL_WRITECORRBIN  = .FALSE.
+   LL_HRINTERP = .FALSE.
+/
+!-----------------------------------------------
+!
+! NAMELIST ICELST
+! ---
+&ICELST
+   LL_ICEREJ = .TRUE.
+   LL_ICEBGFILT = .TRUE.
+   LL_ICERFMASK = .FALSE.
+   LL_ICEREJ_DCOAST = .FALSE.
+   LL_ICEANFILT = .TRUE.
+   ZMIN_ICEDIST = 100.
+   ZICEINFLDIST = 750.
+   NN_ICEREC = -1
+/
+
+!-----------------------------------------------
+!
+! NAMELIST EOFLST
+! ---
+&EOFLST
+   NEOF= 10
+   NKMT = 100
+   ! NREGS = 27118
+   ! EOGNX = 182
+   ! EOGNY = 149
+   NREGS = 92416
+   EOGNX = 361
+   EOGNY = 256
+   EOGNZ = 50
+   CFILEEOF = '_EOF_FILE_'
+   NPRINTEOF = 1
+   LSQUAREDEVA = .TRUE.
+   LL_MDEOFS = .FALSE.
+   RMD_DEP_MAX = 500.
+   REDNMC = 1.
+   NN_DENSREC = -1
+   LL_WRITE_MDEOFS = .FALSE.
+/
+
+!-----------------------------------------------
+!
+! NAMELIST OBSLST
+! ---
+&OBSLST
+   OBS_SLA = 1 
+   OBS_ARG = 1
+   OBS_XBT = 0
+   OBS_GLD = 0
+   OBS_VEL = 0
+   OBS_TRJ = 0
+   OBS_SST = 0
+   OBS_SSS = 0
+   OBS_AMSRE_SST = .FALSE.
+   OBS_MWOI_SST = .FALSE.
+   OBS_AMSRE_SWATH_SST = .FALSE.
+   OBS_TMI_SWATH_SST = .FALSE.
+   OBS_TMI_SWATH_SST = .FALSE.
+   OBS_AQUAR_SSS = .FALSE.
+/
+!-----------------------------------------------
+!
+! NAMELIST GRDLST
+! ---
+&GRDLST
+   NTR      =  1,
+   GRID     =  1,  1,   1
+   CGRID    =  'GLO05L50', 'XXXXXXX', 'XXXXXXX'
+   RATIO    =  1., 4.,  1.
+   MASK     =  3,  3,   3 
+   BARMD    =  0,  1,   1 
+   DIVDA    =  0,  0,   1 
+   DIVDI    =  0,  0,   1 
+/
+!-----------------------------------------------
+!
+! NAMELIST CTLLST
+! ---
+&CTLLST
+   CTL_ALG  = 'L-BFGS-B'
+   CTL_NIMAX = 500
+   CTL_NSMAX = 500
+   CTL_M    = 20    
+   CTL_TOL  = 3.E-2
+   CTL_PER  = 3.E-2
+   LL_BFEND = .FALSE.
+/
+!-----------------------------------------------
+!
+! NAMELIST RCFLST
+! ---
+&RCFLST
+   RCF_TYPE = 2
+   RCF_NTR  = 4
+   RCF_L    = 400000.
+   RCF_LLVVCR = .FALSE.
+   RCF_LLTSAPART = .FALSE.
+   RCF_EFC  = 5.
+   LLPRINTRCFLC = .FALSE.
+   LL_RFLV = .TRUE.
+   RF_CRMN = 50000.
+   RF_CRMX = 1000000.
+   RF_NCR = 200
+   RF_NRES = 50
+   RF_CORRAD_MFACT = 1000.
+   LL_READCOMPSC_LV = .FALSE.
+   LL_WRITECOMPSC_LV = .FALSE.
+   LLRFMASK = .TRUE.
+/
+!-----------------------------------------------
+!
+! NAMELIST SLALST
+! ---
+&SLALST
+   SLA_DEP  = 150.
+   SLA_USES = .TRUE.,.TRUE.,.TRUE.,.TRUE.,.TRUE.,
+              .TRUE.,.TRUE.,.TRUE.,.TRUE.,
+   LCORRSSH = .FALSE.,
+   LLFILTERSLA = .FALSE.,
+   NLANC_KN = 7,
+   SLA_ERR= 0.05,  0.05,  0.05,  0.10, 0.03, 
+            0.03,  0.03,  0.03,  0.12,0.05, 
+	    0.10,  0.03, 0.03 ,  0.03,
+   ZSLANML = 2000.,
+   LLUSEMDTERR = .TRUE.
+   CSLA_OPT = 'DT'
+   CSLA_FMT = '_SLA_FMT_'
+   LL_VARLNM = .FALSE.
+   LL_UNBIAS_SLA = .TRUE.
+   LL_IBERR = .TRUE.
+   SLA_REPERR_INFLAT = 1.
+/
+!-----------------------------------------------
+!
+! NAMELIST SSTLST
+! ---
+&SSTLST
+   SST_ERRS = 0.5,0.5,0.5,0.5,0.5,0.5
+   LLSSTDIAMPLCORR = .FALSE.
+   LLSSTMODBIAS = .FALSE.
+/
+!-----------------------------------------------
+!
+! NAMELIST SSSLST
+! ---
+&SSSLST
+   SSS_ERRS = 0.3, 0.3
+/
+!-----------------------------------------------
+!
+! NAMELIST MPILST
+! ---
+&MPILST
+   LLUSEMPI=.FALSE.,
+   NIOMASTER=1,
+   NIOMASTERB=1,
+   NMPIDOMS=1 
+/
+!-----------------------------------------------
+!
+! NAMELIST BMDLST
+! ---
+&BMDLST
+   BMD_DT    = 7200. 
+   BMD_NDY   =  3.
+   BMD_ADY   =  1.
+   BMD_ALP   = 1.0
+   BMD_FC1   = 0.1
+   BMD_FC2   = 0.2
+   BMD_OVR   = 1.9
+   BMD_RESEM = 5.E-2
+   BMD_NCNT  = 201
+/
+!-----------------------------------------------
+!
+! NAMELIST OBSHAN
+! ---
+&OBSHAN
+   OBSOPT = 'GLO',
+   ZTIME_WEIGTH = 3.5,
+   LLLATINT_TAB= .TRUE.
+   LLEVEFORMV = .FALSE.
+   IO_OBSFORMAT = 1
+   LLOBSSTAT = .TRUE.
+   LL_ONEPROC103 = .FALSE.
+   LL_READALLBIN103 = .TRUE.
+   LL_WRITE_OBS_SCREEN = .TRUE.
+   LL_NOPSABORT = .TRUE.
+/
+!-----------------------------------------------
+!
+! NAMELIST PERTLST
+! ---
+&PERTLST
+   LLPERTOBS = .FALSE.
+   NSEED = 0
+   ZRFACT = 1.
+/
+!-----------------------------------------------
+!
+! NAMELIST INSLST
+! ---
+&INSLST
+   CINS_FMT = '_TINS_',
+   ZMAXDEP =2000.0, 2000.0, 5000.0,2000.0
+   INS_LQC_POS     = .TRUE.
+   INS_LQC_TIME    = .TRUE.
+   INS_LQC_SAL     = .TRUE.
+   INS_LQC_TEMP    = .TRUE.
+   INS_LQC_PRE     = .TRUE.
+   INS_LQC_PROF_T  = .TRUE.
+   INS_LQC_PROF_S  = .TRUE.
+   INS_LQC_PROF_P  = .TRUE.
+   INS_CHK_TIME    = .TRUE.
+   INS_ARG_GREYL   = .TRUE.
+   LL_VERTCHECK    = .FALSE.
+   LL_ICOADS = .FALSE.
+   LL_KEEP_SURFACE = .TRUE.
+   CICOADS_FMT = 'NCDF',
+/
+!-----------------------------------------------!-----------------------------------------------
+!
+! NAMELIST THINLST
+! ---
+&THINLST
+   LTHIN_SLA  = .TRUE.
+   LTHIN_INS  = .FALSE.
+   LTHIN_SST  = .TRUE.
+   LTHIN_SSS  = .TRUE.
+   CINSTHINOPT  = 'A'
+   LDOUBLETHIN = .TRUE.
+   RTHIND_SLA_X=0.5, RTHIND_SLA_Y=0.5
+   RTHIND_INS_X=1.5, RTHIND_INS_Y=1.5, RTHIND_INS_Z=1.5
+   RTHIND_SST_X=1.5, RTHIND_SST_Y=1.5
+   RTHIND_SSS_X=1.5, RTHIND_SSS_Y=1.5
+/
+!-----------------------------------------------
+!
+! NAMELIST BGQCLST
+! ---
+&BGQCLST
+   LLBGQC_SLA = .TRUE.
+   LLBGQC_INS = .TRUE.
+   LLBGQC_SST = .TRUE.
+   LLBGQC_SSS = .TRUE.
+   RALFA_SLA=0.13
+   RALFA_INS=4.0
+   RALFA_SST=4.0
+   RALFA_SSS=4.0
+   LLUSEBGERR = .TRUE.
+   LLFORMBGE = .FALSE.
+   RBGERR_SSH=0.10
+   RBGERR_SAL=0.2
+   RBGERR_TEM=1.00
+   RBGERR_SST=0.50
+   RBGERR_SSS=0.2
+ /
+!-----------------------------------------------
+!
+! NAMELIST CLCKLST
+! ---
+&CLCKLST
+   LLCLCK_INS = .TRUE.
+   LLCLCK_SST = .TRUE.
+   LLCLCK_SSS = .TRUE.
+   CLIMLIM = 3., 9., 9.
+ /
+&CREJLST
+ /
+!-----------------------------------------------
+&HUBERLST
+ /
+&DBGLST
+ /
+&HYBLST
+ /
+&TLADLST
+ /
+&BALLST
+ /

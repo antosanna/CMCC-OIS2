@@ -1,0 +1,7 @@
+To submit
+
+check 
+config file for the dates
+
+and submit it as
+bsub < submit_run_prepobs.sh

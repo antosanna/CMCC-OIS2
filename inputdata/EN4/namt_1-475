@@ -1,0 +1,108 @@
+!! ------------------- 
+!! Namelist for SOSIE 
+!! ------------------- 
+!! 
+!! 
+!! *********************** 
+!! Input characteristics : 
+!! *********************** 
+!! 
+&ninput
+ivect     = 0
+lregin    = T
+cf_in     = '_FIN_'
+cv_in     = 'temperature'
+cv_t_in   = 'time'
+jt1       = 0
+jt2       = 0
+jplev     = 0  ! we want 3D interpolation
+cf_x_in   = '_FIN_'
+cv_lon_in = 'lon'
+cv_lat_in = 'lat'
+cf_lsm_in = 'missing_value'
+cv_lsm_in = ''
+ldrown    = T
+ewper     = 0
+vmax      =  1.E6
+vmin      = -1.E6
+/
+!!
+!!
+!!
+!!
+!! ***********************************
+!!  IF 3D INTERPOLATION ( jplev = 0 )
+!! ***********************************
+!!
+&n3d
+cf_z_in  = '_FIN_'
+cv_z_in  = 'depth'
+cf_z_out = 'mesh_mask.nc'
+cv_z_out = 'gdept_1d'
+/
+!! 
+!!
+!!
+!!
+!!
+!! ***************************** 
+!! Output Grid characteristics : 
+!! ***************************** 
+!!
+&noutput
+lregout    = F
+cf_x_out   = 'mesh_mask.nc'
+cv_lon_out = 'glamt'
+cv_lat_out = 'gphit'
+cf_lsm_out = 'mesh_mask.nc'
+cv_lsm_out = 'tmask'
+lmout      = F
+rmaskvalue = 0.
+lct        = F
+t0         = 0.
+t_stp      = 1.
+/
+!! 
+!! 
+!! 
+!! 
+!! ******************************* 
+!! Netcdf output characteristics : 
+!! ******************************* 
+!! 
+!! This mostly deals with how the output file to be created is going to look like!
+!!
+!! cmethod  : the 2D interpolation method to be used
+!!            use 'akima' if your input domain is regular (non-distorded grid)
+!!            use 'bilin' otherwise, which is bilinear 2D interpolation
+!!
+!! *** Into the netcdf file to be created : *** 
+!! cv_l_out : name for longitude on the output file [char] 
+!! cv_p_out : name for latitude on the output file [char] 
+!! cv_t_out : name for time on the output file [char] 
+!! cv_out   : name for treated variable on the output file [char] 
+!! cu_out   : treated variable units [char] 
+!! cu_t     : time unit [char]
+!! cln_out  : treated variable long name [char] 
+!! cd_out   : directory to create output file to [char]
+!! 
+!! *** Name of the output file : *** 
+!! csource  : short string to describe origin of the file [char] 
+!! ctarget  : short string to describe the target grid [char] 
+!! cextra   : short extra indication about the file [char] 
+!! 
+&nnetcdf
+cmethod  = 'akima'
+cv_l_out = 'lon'
+cv_p_out = 'lat'
+cv_t_out = 'time_counter'
+cv_out   = 'votemper'
+cu_out   = 'degC'
+cu_t     = 'months since 00:01:01'
+cln_out  = 'Seawater Temperature'
+cd_out   = '.'
+csource  = 'EN4'
+ctarget  = 'ORCA025'
+cextra   = '_TS_'
+/ 
+!!

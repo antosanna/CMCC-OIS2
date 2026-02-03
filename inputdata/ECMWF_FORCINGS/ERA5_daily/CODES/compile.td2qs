@@ -1,0 +1,14 @@
+#!/bin/ksh
+set -x
+
+
+#NCDF=/home/ans012/local/netcdf
+COMP=ifort
+
+str=""
+for f in read_field2st.F90 write_field2st.F90 td2qs.F90 handlerr.F90; do
+   $COMP -c -g -I $NETCDF/include $f || exit -1
+   str="$str `echo $f | cut -d. -f1`.o"
+done
+
+$COMP -g $str -L$NETCDF/lib -lnetcdf -lnetcdff -o td2qs.x

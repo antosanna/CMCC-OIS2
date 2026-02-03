@@ -1,0 +1,216 @@
+!------------------------------------------------------------------------
+! This file is used to modify datm.streams.xml generated in $RUNDIR
+! Entries should have the form
+!  <streamname>:<stream_variable>= <new stream_value> (NO Quotes!!!)
+! The following are accepted values for a stream named foo
+!  foo:meshfile = character string
+!  foo:datafiles = comma separated string of full pathnames (e.g. file1,file2,file3...)
+!  foo:datavars = comma separated string of field pairs  (e.g. foo foobar,foo2 foobar2...)
+!  foo:taxmode = one of [cycle, extend, limit]
+!  foo:tintalgo = one of [lower,upper,nearest,linear,coszen]
+!  foo:readmode = single (only suported mode right now)
+!  foo:mapalgo = one of [bilinear,redist,nn,consf,consd,none]
+!  foo:dtlimit = real (1.5 is default)
+!  foo:year_first = integer
+!  foo:year_last = integer
+!  foo:year_align = integer
+!  foo:vectors = null or the names of the vector fields in the model (i.e. Sa_u:Sa_v)
+!  foo:lev_dimname: = one of [null,name of level dimenion name]
+!  foo:offset = integer
+! As an example:
+!   foo:year_first = 1950
+! would change the stream year_first stream_entry to 1950 for the foo stream block
+! NOTE: multi-line inputs are enabled by adding a \ at the end of the line
+! As an emaple:
+! foo:datafiles=foo1,foo2, \
+!     foo3
+! Will yield the following new entry for datafiles in stream foo
+!   <datafiles>
+!      <file>foo1</file>
+!      <file>foo2</file>
+!      <file>foo3</file>
+!   </datafiles>
+!------------------------------------------------------------------------
+presaero.hist:datafiles =/work/cmcc/aspect/CESM2/inputdata/rof/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc
+ERA5.PREC:taxmode=cycle
+ERA5.PREC:tintalgo=linear
+ERA5.PREC:readmode=single
+ERA5.PREC:mapalgo=bilinear
+ERA5.PREC:dtlimit=2.5
+ERA5.PREC:year_first=2024
+ERA5.PREC:year_last=2024
+ERA5.PREC:year_align=2024
+ERA5.PREC:vectors=null
+ERA5.PREC:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.PREC:lev_dimname=null
+ERA5.PREC:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-12.nc
+ERA5.PREC:datavars=precip  Faxa_prec
+ERA5.PREC:offset=0
+
+ERA5.LWDN:taxmode=cycle
+ERA5.LWDN:tintalgo=linear
+ERA5.LWDN:readmode=single
+ERA5.LWDN:mapalgo=bilinear
+ERA5.LWDN:dtlimit=2.5
+ERA5.LWDN:year_first=2024
+ERA5.LWDN:year_last=2024
+ERA5.LWDN:year_align=2024
+ERA5.LWDN:vectors=null
+ERA5.LWDN:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.LWDN:lev_dimname=null
+ERA5.LWDN:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-12.nc
+ERA5.LWDN:datavars=lwrd  Faxa_lwdn
+ERA5.LWDN:offset=0
+
+ERA5.SWDN:taxmode=cycle
+ERA5.SWDN:tintalgo=coszen
+ERA5.SWDN:readmode=single
+ERA5.SWDN:mapalgo=bilinear
+ERA5.SWDN:dtlimit=2.5
+ERA5.SWDN:year_first=2024
+ERA5.SWDN:year_last=2024
+ERA5.SWDN:year_align=2024
+ERA5.SWDN:vectors=null
+ERA5.SWDN:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.SWDN:lev_dimname=null
+ERA5.SWDN:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-12.nc
+ERA5.SWDN:datavars=swrd  Faxa_swdn
+ERA5.SWDN:offset=0
+
+ERA5.Q10:taxmode=cycle
+ERA5.Q10:tintalgo=linear
+ERA5.Q10:readmode=single
+ERA5.Q10:mapalgo=bilinear
+ERA5.Q10:dtlimit=2.5
+ERA5.Q10:year_first=2024
+ERA5.Q10:year_last=2024
+ERA5.Q10:year_align=2024
+ERA5.Q10:vectors=null
+ERA5.Q10:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.Q10:lev_dimname=null
+ERA5.Q10:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-12.nc
+ERA5.Q10:datavars=q10m  Sa_shum
+ERA5.Q10:offset=0
+
+ERA5.SLP_:taxmode=cycle
+ERA5.SLP_:tintalgo=linear
+ERA5.SLP_:readmode=single
+ERA5.SLP_:mapalgo=bilinear
+ERA5.SLP_:dtlimit=2.5
+ERA5.SLP_:year_first=2024
+ERA5.SLP_:year_last=2024
+ERA5.SLP_:year_align=2024
+ERA5.SLP_:vectors=null
+ERA5.SLP_:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.SLP_:lev_dimname=null
+ERA5.SLP_:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-12.nc
+ERA5.SLP_:datavars=mslp  Sa_pslv
+ERA5.SLP_:offset=0
+
+ERA5.T10:taxmode=cycle
+ERA5.T10:tintalgo=linear
+ERA5.T10:readmode=single
+ERA5.T10:mapalgo=bilinear
+ERA5.T10:dtlimit=2.5
+ERA5.T10:year_first=2024
+ERA5.T10:year_last=2024
+ERA5.T10:year_align=2024
+ERA5.T10:vectors=null
+ERA5.T10:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.T10:lev_dimname=null
+ERA5.T10:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-12.nc
+ERA5.T10:datavars=t10m  Sa_tbot
+ERA5.T10:offset=0
+
+ERA5.UV_10:taxmode=cycle
+ERA5.UV_10:tintalgo=linear
+ERA5.UV_10:readmode=single
+ERA5.UV_10:mapalgo=bilinear
+ERA5.UV_10:dtlimit=2.5
+ERA5.UV_10:year_first=2024
+ERA5.UV_10:year_last=2024
+ERA5.UV_10:year_align=2024
+ERA5.UV_10:vectors=null
+ERA5.UV_10:meshfile=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc
+ERA5.UV_10:lev_dimname=null
+ERA5.UV_10:datafiles=/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-01.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-02.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-03.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-04.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-05.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-06.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-07.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-08.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-09.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-10.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-11.nc,\
+      /work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-12.nc
+ERA5.UV_10:datavars=u10m  Sa_u, v10m  Sa_v
+ERA5.UV_10:offset=0
+

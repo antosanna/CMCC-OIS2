@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<file id="stream" version="2.0">
+
+  <stream_info name="ERA5.PREC">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_precip.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>precip  Faxa_prec</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.LWDN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_lwrd.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>lwrd  Faxa_lwdn</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.SWDN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>coszen</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_swrd.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>swrd  Faxa_swdn</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.Q10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_q10m.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>q10m  Sa_shum</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.SLP_">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_mslp.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>mslp  Sa_pslv</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.T10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>null</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_t10m.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>t10m  Sa_tbot</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="ERA5.UV_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>2.5</dtlimit>
+   <year_first>2024</year_first>
+   <year_last>2024</year_last>
+   <year_align>2024</year_align>
+   <vectors>Sa_u:Sa_v</vectors>
+   <meshfile>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/ERA5_025_scrp_grid.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-01.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-02.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-03.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-04.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-05.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-06.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-07.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-08.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-09.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-10.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-11.nc</file>
+      <file>/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/ERA5/Era5_uv10m.2024-12.nc</file>
+   </datafiles>
+   <datavars>
+      <var>u10m  Sa_u</var>
+      <var>v10m  Sa_v</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="presaero.hist">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1849</year_first>
+   <year_last>2014</year_last>
+   <year_align>1849</year_align>
+   <vectors>null</vectors>
+   <meshfile>/data/inputs/CESM/inputdata/share/meshes/fv0.9x1.25_141008_polemod_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/data/inputs/CESM/inputdata/atm/cam/chem/trop_mozart_aero/aero/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc</file>
+   </datafiles>
+   <datavars>
+      <var>BCDEPWET   Faxa_bcphiwet</var>
+      <var>BCPHODRY   Faxa_bcphodry</var>
+      <var>BCPHIDRY   Faxa_bcphidry</var>
+      <var>OCDEPWET   Faxa_ocphiwet</var>
+      <var>OCPHIDRY   Faxa_ocphidry</var>
+      <var>OCPHODRY   Faxa_ocphodry</var>
+      <var>DSTX01WD   Faxa_dstwet1</var>
+      <var>DSTX01DD   Faxa_dstdry1</var>
+      <var>DSTX02WD   Faxa_dstwet2</var>
+      <var>DSTX02DD   Faxa_dstdry2</var>
+      <var>DSTX03WD   Faxa_dstwet3</var>
+      <var>DSTX03DD   Faxa_dstdry3</var>
+      <var>DSTX04WD   Faxa_dstwet4</var>
+      <var>DSTX04DD   Faxa_dstdry4</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="presndep.hist">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1849</year_first>
+   <year_last>2014</year_last>
+   <year_align>1849</year_align>
+   <vectors>null</vectors>
+   <meshfile>/data/inputs/CESM/inputdata/share/meshes/fv0.9x1.25_141008_polemod_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/data/inputs/CESM/inputdata/lnd/clm2/ndepdata/fndep_clm_hist_b.e21.BWHIST.f09_g17.CMIP6-historical-WACCM.ensmean_1849-2015_monthly_0.9x1.25_c180926.nc</file>
+   </datafiles>
+   <datavars>
+      <var>NDEP_NHx_month  Faxa_ndep_nhx</var>
+      <var>NDEP_NOy_month  Faxa_ndep_noy</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="co2tseries.20tr">
+   <taxmode>extend</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>none</mapalgo>
+   <dtlimit>1.e30</dtlimit>
+   <year_first>1850</year_first>
+   <year_last>2014</year_last>
+   <year_align>1850</year_align>
+   <vectors>null</vectors>
+   <meshfile>none</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>/data/inputs/CESM/inputdata/atm/datm7/CO2/fco2_datm_global_simyr_1750-2014_CMIP6_c180929.nc</file>
+   </datafiles>
+   <datavars>
+      <var>CO2   Sa_co2diag</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+</file>

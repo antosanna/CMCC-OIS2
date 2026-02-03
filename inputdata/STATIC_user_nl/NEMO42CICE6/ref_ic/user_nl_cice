@@ -1,0 +1,11 @@
+&setup_nml
+  ln_asmaice = ._AICE_.
+  ln_asmboth = ._BOTH_.
+  ln_asmiau = ._IAU_.
+  ln_nudice = ._NUDICE_.
+  incr_file = "_INCRFILE_"
+  nday_asmiau = 1
+  nday_res = _NDAYRES_
+  histfreq = "d", "x", "x", "x", "x"
+  ndtd = _NDTDICE_
+/

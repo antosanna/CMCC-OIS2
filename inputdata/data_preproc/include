@@ -1,0 +1,178 @@
+#!/bin/sh -l
+#=======================================================
+#.. Configuration File
+#.. for ORCA2 + 3DVar Experiment
+#=======================================================
+
+. ${HOME}/.bashrc
+
+. ${DIR_UTIL_OIS2}/descr_OIS2.sh
+
+set -a
+
+#----------------
+EXPNAME=data_preproc
+#----------------
+
+#--------- COMMON SETTINGS ----------#
+#Home directory
+#HOME=/users_home/cmcc/cp1/
+# Number of Slots (i.e. 3dvar+forecast cycles)
+#NSLOTS=3000
+NSLOTS=120
+# Member Number
+MEMB=0
+# Temp. Corr. of EOF perturb.
+TCOR_EOS_DAYS=20
+# Directory of scripts (pwd)
+# Initial date of experiment
+START_DATE=1960010100 #1985010300 #dont need to be changed unless we are running from behind this date
+# Final date of experiment
+#END_DATE=2017010500
+#END_DATE=2024060100
+# Job Scheduler
+SCHEDULER=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin/bsub
+# Adding time utility -- hours
+ADDDTG="$STATIC_Tools/dateincr -h"
+# Diff time utility -- hours
+DIFFDTG="$STATIC_Tools/datediff -h"
+# Directory containing static files 
+STATIC_NEMO_DIR=/work/data/inputs/CESM/inputdata/ocn/nemo/tn0.25v3/grid/
+STATIC_DIR=${OIS2_work_inpdir}/STATIC_DA_NEMO42/assim/ #/data/inputs/CESM//inputdata/ocn/nemo/tn0.25v3/grid/
+# Top-level working directory
+WORKINGDIR=${OIS2_work}
+# Adding time utility -- days
+ADDDDD="$STATIC_Tools/dateincr -d"
+# GUNZIP utility
+GUNZIP=gunzip
+# Do Some Postproc
+LLPOSTPROC=1
+# Postproc submitted as job (1) or launched as script (0)
+SUBMIT_POSTPROC=1
+# Use Incremental Analysis Update (or Dynamical Initialization)
+LL_IAU=0
+# GRID name
+GRID=ORCA025
+
+#--------- FORECAST MODEL SETTINGS ----------#
+
+# Length of forecasts - ORCA2 model (hours)
+FRC_LENGTH=168
+# Output frequency in days
+OUTPUT_DAYS=1
+# ORCA-2 Executable, absolute path
+#for new experiment with sea ice
+ORCA_EXE=$DIR_PREPOBS/bin/nemo.x
+
+# ORCA-2 Namelist
+#ORCA_NAMELIST=$DIR_PREPOBS/namelist/
+# LIM-2 Namelist
+#LIM_NAMELIST=$DIR_PREPOBS/namelist/
+# Number of procs for forecast
+NPROC_FRC=330
+# ORCA Timestep in seconds
+TSTEP=1200 #1200
+# SBC coupling in secs
+FSBC_SEC=3600
+# Frequency (in days) of restart files
+FREQRES_DAYS=7
+# Obsmisfits computation frequency (in seconds)
+OBSM_FREQ=3600
+# Restart enabled at end of months
+REST_AT_MONTH=0
+
+#--------- 3DVAR SETTINGS ----------#
+
+# STATIC_DIR FOR DA
+DA_STATIC_DIR=${STATIC_DIR} 
+# Length of assim. window
+VAR_LENGTH=168
+# 3DVAR Executable, absolute path
+VAR_EXE=$DIR_PREPOBS/bin/var_3d_juno_mpi_sla_bia_lat_with_SLA_nemo42.x
+# 3DVAR Namelist
+VAR_NAMELIST=$DIR_PREPOBS/namelist_3dvar
+# PREPOBS Namelist
+PREPOBS_NAMELIST=$DIR_PREPOBS/namelist_3dvar
+# ENSEMBLES EN3 Data Directory
+EN3_DIR=/data/cmcc/ac28919/data/EN4/cheng14/ 
+CORAINSITU=/data/inputs/METOCEAN/historical/obs/ocean/in_situ/CMS/GlobOce/latest_EIS_202311/
+# SLA Data directory
+SLA_DIR=/data/cmcc/c-glors/data/SLA/AVISO/sla  
+SLA_CF_DIR=/data/cmcc/c-glors/data/SLA/AVISO/sla  
+# List of satellite subdirectories in $SSH_DIR (moved in the script)
+#LIST_SAT="e1 e2 en enn g2 j1 j1n j2 tp tpn j3 s3a s3b"
+#LIST_SAT="al c2 e1 e2 en enn g2 h2 j1 j1g j1n j2 j3 tp tpn s3a s3b"
+#
+# List of satellite suffix names
+#LIST_SATNAMES="ERS1 ERS2 ENVISAT ENVISAT GFO JASON1 JASON1 JASON2 TP TP JASON3 SENT3a SENT3b"
+#LIST_SATNAMES="ALTIKA CRYOSAT2 ERS1 ERS2 ENVISAT ENVISAT GFO HY2A JASON1 JASON1 JASON1 JASON2 JASON3 TP TP SENT3A SENT3B"
+# Use SST
+LLUSESST=0
+# SST data dir (used in run_orca)
+SSTDIR=./ 
+# Bias Correction DIR
+BCORR_DIR=./ 
+# Number of procs for 3DVAR
+NPROC_VAR=36
+# Use Sla
+LLUSESLA=1
+# Use EN3
+LLUSEEN3=0
+# Use AMSRE-SST
+LLUSEAMSRE=0
+# Use MWOI-SST
+LLUSEMWOI=0
+# Use AMSRE-SST SWATH L2P DATA
+LLUSEAMSRE2=0
+# Use TMI-SST SWATH L2P DATA
+LLUSETMI2=0
+# Use AQUARIUS SSS
+LLUSEAQSSS=0
+# MDT file, in STATIC_DIR
+MDTFILE=MDT.nc
+MDTFILE_ORCA=$MDTFILE
+#SLA BIAS CORRECTION
+SLA_MAP_DIR=/data/cmcc/ac28919/data/SLA/INTERP_SLA_eORCA025/eORCA025 
+SLAERR_MAP_DIR=/work/cmcc/ac28919/INTERP_SLA_eORCA025/DT/ERR/eORCA025
+# DIR for AMSR-E obs files
+#AMSRE_DIR=/home/ans059/data/SST/amsre/bmaps_v05
+# DIR for MWOI obs files
+#MWOI_DIR=/home/ans059/data/SST/REMSS_TMI+AMSRE/nc
+# DIR for MWOI obs files
+#AQSSS_DIR=/home/ans059/data/SSS/simulated_aquarius
+# DIR for EOF
+EOF_DIR=${OIS2_work_inpdir}/STATIC_DA_NEMO42/assim/EOFS/
+# EOF option
+EOF_OPT=CTRL03BR_R05L75
+# DIR for RF coeffs
+RFC_DIR=${OIS2_work_inpdir}/STATIC_DA_NEMO42/assim/CORRAD/
+# MODULATE EOFS
+LL_MODEOFS=0
+# MODEOFS Executable (frontend or machine)
+# Dir for bge s.d.s
+BGEDIR=$EOF_DIR
+# Directory for IB errors
+IBDIR=${OIS2_work_inpdir}/STATIC_DA_NEMO42/assim/CORRAD/IB_ERROR
+# File prefix for BGE
+BGEPRF=bgsde_b_025
+# Shuffle obs exe (absolute path)
+#SHUFFLE_OBS=$DIR_PREPOBS/bin/shuffle_obs.x
+# Do not perform Prepobs (fetch obs files from OBS_STOREDIR)
+ARCHIVED_PREPOBS=0
+# From prepobs
+#OBS_STOREDIR=/work/cmcc/ac28919/NEMO/R025_8E00_PO2
+OBS_STOREDIR=${OIS2_work}/${EXPNAME} 
+# MPI processes for 3DVAR
+NNMPI=6
+# Merge domains executable
+#MERGED_EXE=$DIR_PREPOBS/bin/merge.x
+
+#=======================================================
+# Internal Definitions
+ctrl_file=$DIR_PREPOBS/which_step
+tctrl_file=$DIR_PREPOBS/timing
+slot_file=$DIR_PREPOBS/slot
+
+#=======================================================
+set +a
+#=======================================================

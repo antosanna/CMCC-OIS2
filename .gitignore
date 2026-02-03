@@ -1,0 +1,5 @@
+### Ignore the following:
+3dvar
+executables
+logs
+inputdata/data_preproc/bin

@@ -1,0 +1,129 @@
+#!/bin/ksh
+
+#.. Collection of useful Korn functions
+#.. especially intended for better handling of time
+
+#.. A.S.
+
+function splitdate {
+	mess0="splitdate expects 1 YYYYMMDDHH argument"
+        [[ $# -eq 1 ]] || \
+	{ echo $mess0 ; exit 5 ; }
+	arg=$1
+        [[ ${#arg} -eq 10 ]] || \
+	{ echo $mess0 ; exit 5 ; }
+        lyyyy=`echo $arg | cut -c 1-4`
+	lmm=`echo $arg | cut -c 5-6`
+	ldd=`echo $arg | cut -c 7-8`
+	lhh=`echo $arg | cut -c 9-10`
+	lymd=${lyyyy}${lmm}${ldd}
+        echo $lyyyy
+        echo $lmm
+        echo $ldd
+        echo $lhh
+        echo $lymd
+        return
+}
+
+function whichseason {
+        mess0="whichseason expects 1 MM argument"
+        [[ $# -eq 1 ]] || \
+	{ echo $mess0 ; exit 5 ; }
+	arg=$1
+        [[ ${#arg} -eq 2 ]] || \
+	{ echo $mess0 ; exit 5 ; }
+        mess1="whichseason cannot determine season for MM=$arg"
+	case $arg in
+        	01|02|03)  seas="win" ;;
+        	04|05|06)  seas="spr" ;;
+        	07|08|09)  seas="sum" ;;
+        	10|11|12)  seas="aut" ;;
+        	*)  echo $mess1 ; exit 3 ;;
+	esac
+	echo $seas
+}
+
+function whichseason2 {
+        mess0="whichseason expects 1 MM argument"
+        [[ $# -eq 1 ]] || \
+        { echo $mess0 ; exit 5 ; }
+        arg=$1
+        [[ ${#arg} -eq 2 ]] || \
+        { echo $mess0 ; exit 5 ; }
+        mess1="whichseason cannot determine season for MM=$arg"
+        case $arg in
+                01|02|03|04|11|12)  seas="win" ;;
+                05|06|07|08|09|10)  seas="sum" ;;
+                *)  echo $mess1 ; exit 3 ;;
+        esac
+        echo $seas
+}
+
+
+function clean_day {
+        ARCHBASE=/data/ans012/NEMO
+        STEP="NIL"
+        EXPNAME="NIL"
+        DATE=0
+        while getopts a:e:d:s: opt;do
+	   case $opt in
+                a) ARCHBASE=$OPTARG ;;
+                e) EXPNAME=$OPTARG ;;
+                s) STEP=$OPTARG ;;
+                d) DATE=$OPTARG ;;
+                ?) echo "clean_day : argument not supported" ; exit 4 ;;
+           esac
+        done
+
+        if [ ! -d $ARCHBASE ]; then 
+          echo "$ARCHBASE not found" ; exit 3
+        fi
+
+        if [ $EXPNAME = "NIL" ] || [ $STEP = "NIL" ] || [ $DATE -eq 0 ]; then
+		echo "clean_day : mandatory arguments not passed" ; exit 3
+        fi
+        if [ $STEP = "ASS" ] ; then
+             dir=assim
+        elif [ $STEP = "FRC" ] ; then
+             dir=forecast
+        else
+	     echo "clean_day : unvalid step" ; exit 3
+        fi
+        ARCHDIR=$ARCHBASE/$EXPNAME/$DATE/$dir
+        mkdir -p $ARCHDIR
+
+        if [ $STEP = "ASS" ] ; then
+    	       rm -f eof* EN3* corrections_1.txt Sst_eve.geo omg.dat
+ 	       rm -f corrections_1.dat *geo 
+        else
+               rm -f MASTER
+               rm -f LEVITUS* ahmcoef bathymetry coordinates.nc
+               rm -f dist.coast.nc flx_1d.nc runoff_1m_nomask.nc
+               rm -f sst_1d.nc taux_1d.nc tauy_1d.nc ocean.output
+        fi
+}
+
+function rmday {
+	WDIR=/users/home/`whoami`/model/work
+        EXPNAME="NIL"
+        DATE=0
+        while getopts e:d:w: opt;do
+	   case $opt in
+                e) EXPNAME=$OPTARG ;;
+                d) DATE=$OPTARG ;;
+                w) WDIR=$OPTARG ;;
+                ?) echo "rmday : argument not supported" ; exit 4 ;;
+           esac
+        done
+
+        [[ -d $WDIR ]] || \
+        { echo "$WDIR not found" ; exit 3 ; }
+        if [ $EXPNAME = "NIL" ] || [ $DATE -eq 0 ]; then
+		echo "rmday : mandatory arguments not passed" ; exit 3
+        fi
+
+        dir=$WDIR/$EXPNAME/$DATE
+        cd $HOME
+        rm -R $dir || { echo "Cannot remove dir $dir" ; exit 7 ; }
+
+}

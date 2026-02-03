@@ -1,0 +1,247 @@
+#!/bin/bash
+#BSUB -J postproc__EXP_
+#BSUB -o logs/postproc__EXP__%J.out  # Appends std output to file %J.out.
+#BSUB -e logs/postproc__EXP__%J.err  # Appends std error to file %J.err.
+#BSUB -q p_short
+#BSUB -P 0490
+##BSUB -R "rusage[mem=30G]"
+##BSUB -M 30G
+#BSUB -x
+#BSUB -n 55
+
+set -x
+
+EXPNAME=_EXP_
+DTG=_DTG_
+EDTG=_EDTG_
+ASM=7
+
+BASED=$OIS2_cases
+DATE_DIFF="${STATIC_Tools}/datediff"
+DATE_INCR="$STATIC_Tools/dateincr"
+
+EXPDIR=$BASED/$EXPNAME
+SCRDIR=$DIR_CASES_OIS2/$EXPNAME
+
+ARCHDIR=$OIS2_work/rea_archive/$EXPNAME
+
+wdir=${EXPDIR}/${DTG}/
+odir=${ARCHDIR}/WEEKLY
+o2dir=${ARCHDIR}/DAILY
+
+osdir=${EXPDIR}/OBSSTAT_ONLINE
+o3dir=${ARCHDIR}/LOG
+o5dir=${ARCHDIR}/DAILY_MONTHLY
+
+o4dir=${ARCHDIR}/CPL
+
+o6dir=${ARCHDIR}/MONTHLY_RESTARTS
+
+
+mkdir -p $odir
+mkdir -p $osdir
+mkdir -p $o2dir
+mkdir -p $o3dir
+mkdir -p $o4dir
+mkdir -p $o5dir
+mkdir -p $o6dir
+
+cd $wdir/run || exit 1
+
+#if [ -s temp_timestep ]; then
+#        TIMESTEP=`cat temp_timestep`
+#fi
+
+conda activate /work/cmcc/aspect/.nemo_rebuild 
+
+$(ls -1 $wdir/run/${EXPNAME}_1d*_${var}* | head -1)
+
+
+for var in "grid_T" "grid_U" "grid_V"  ;do
+# for ffile in $(ls _EXP__1d*_${var}*);do
+#  dd=$(ls $ffile | cut -d- -f3 | cut -d. -f1)
+#  mv $ffile $o2dir/_EXP__1d_${dd}_${dd}_${var}.nc
+#done
+
+
+DTGno00=$(echo $DTG | cut -c 1-8)
+EDTGno00=$(echo $DTG | cut -c 1-8)
+
+ EXPDAT=${DTGno00}
+ while ( ${EXPDAT} .le. ${EDTGno00} );
+ do 	
+    ff=$(ls -1 ${EXPNAME}_1d*_${var}_*${EXPDAT}-${EXPDAT}* | head -1)
+    if [ $(ls -1 ${EXPNAME}_1d*_${var}_*${EXPDAT}-${EXPDAT}* | wc -l ) == 330 ];then
+
+        mpirun -n 55 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff 
+  else
+	 mpirun -n 53 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff
+
+  fi
+  mv -f  ${EXPNAME}_1d*_${var}*${EXPDAT}-${EXPDAT}*.nc $o2dir/ || exit -1
+  EXPDAT=$(date -d "$EXPDAT + 1 days" +%Y%m%d)
+ done
+done
+
+
+ff=$(ls -1 ${EXPNAME}_7d*_grid_T_* | head -1)
+if [ $(ls -1 ${EXPNAME}_7d*_grid_T_* | wc -l ) == 330 ];then
+mpirun -n 55 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff
+else
+mpirun -n 53 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff
+fi
+
+
+mv -f  ${EXPNAME}_7d*_grid_T.nc $odir/ || exit -1
+
+
+mv -f ${EXPNAME}.cice.h.*.nc $o2dir/
+
+#for f in $( find . -type f -name "${EXPNAME}.cpl.r.*nc" );do
+#    fbase=$(basename $f)
+#    cp -f $f $o4dir/${DTG}_${fbase}
+#done
+
+#for var in grid_T; do
+#  mv NEMO_7d_*_${var}.nc $odir/
+#done
+
+ys=`echo $DTG | cut -c 1-4`
+ye=`echo $EDTG | cut -c 1-4`
+mms=`echo $DTG | cut -c 5-6`
+mme=`echo $EDTG | cut -c 5-6`
+hdiff=`$DATE_DIFF -h $DTG $EDTG`
+PDTG=`$DATE_INCR -h $DTG $hdiff`
+yp=`echo $PDTG | cut -c 1-4`
+
+#if [ $ys -ne $ye ]; then
+        odir=${ARCHDIR}/RESTARTS
+        mkdir -p $odir/${DTG}
+        INI_STEP_PREV=$(grep -o '^[^!]*' namelist_cfg | grep "nn_it000" | cut -d= -f2 | cut -d! -f1)
+        PREV_TSTEP=$(grep -o '^[^!]*' namelist_cfg | grep rn_Dt | cut -d= -f2 | cut -d. -f1)
+        LAST_STEP_WEEKLY=$(( (${ASM}*86400/${PREV_TSTEP}) + ${INI_STEP_PREV} -1 ))
+        LASTSTEPWEEKFORMAT=$(printf "%08d" $LAST_STEP_WEEKLY)
+        for f in ${EXPNAME}_${LASTSTEPWEEKFORMAT}_restart_*.nc; do
+                cp -f $f $odir/${DTG}/${DTG}_${f}
+        done
+
+        for f in $( find . -type f -name "${EXPNAME}.*.r.*nc" );do
+            fbase=$(basename $f)
+         cp -f $f $odir/${DTG}/${DTG}_${fbase}
+        done
+
+#fi
+
+
+if [ "$mms" != "$mme" ] ; then	  
+    ysm1=$(( $ys - 1 ))
+    cd $o5dir
+    
+    for var in "grid_T" "grid_U" "grid_V"  ;do
+       ncrcat ../DAILY/${EXPNAME}_1d*_${var}*${ys}${mms}??-${ys}${mms}??.nc -O NEMO_1d_y${ys}m${mms}_${var}.nc
+    done
+       #sed -e "s/_YYYREAD_/$ysm1/g" script_daily_tmp.sh > script_daily_1y.sh
+       #if [ ! -e ${ysm1}/NEMO_1d_y${ysm1}m01_grid_T.nc ];then
+       #ttmm=$(bsub < script_daily_1y.sh )
+       #fi   
+    cd $wdir/run
+fi
+
+if [ $mms -ne $mme ] ; then
+   ymds=`echo $DTG | cut -c 1-8`
+   ymde=`echo $EDTG | cut -c 1-6`01
+   ymde2=`echo $EDTG | cut -c 1-6`02 #bug with 0601 for two years
+   lastmonthdate=$(date -d "$ymde2 - 2 days" +%Y%m%d)
+   yyl=$(echo $lastmonthdate | cut -c 1-4)
+   mml=$(echo $lastmonthdate | cut -c 5-6)
+   ddl=$(echo $lastmonthdate | cut -c 7-8)
+   ts=`$DATE_DIFF ${ymde2} $ymds`
+   ts=$(( $ts - 1 ))
+    
+   INI_STEP_MONTH=$(grep -o '^[^!]*' namelist_cfg | grep "nn_it000" | cut -d= -f2 | cut -d! -f1)
+   PREV_TSTEP_MONTH=$(grep -o '^[^!]*' namelist_cfg | grep rn_Dt | cut -d= -f2 | cut -d. -f1)
+   LAST_STEP_MONTH=$(( (${ts}*86400/${PREV_TSTEP_MONTH}) + ${INI_STEP_MONTH} -1 ))
+   LASTSTEPMONTHFORMAT=$(printf "%08d" $LAST_STEP_MONTH)
+   mkdir -p $o6dir/${yyl}${mml}
+   for f in ${EXPNAME}_${LASTSTEPMONTHFORMAT}_restart_*.nc; do
+  	   mv $f $o6dir/${yyl}${mml}/${lastmonthdate}_${f}
+   done
+   
+
+   for f in $( find . -type f -name "${EXPNAME}.*.r.${ye}-${mme}-01-00000.nc" );do
+	   fbase=$(basename $f)
+         mv -f $f $o6dir/${yyl}${mml}/${lastmonthdate}_${fbase}
+   done
+
+
+fi
+
+
+  for f in $(ls *log*.gz);
+   do
+      mv -f $f $o3dir/${DTG}_${f}
+   done
+
+
+mkdir -p $ARCHDIR/ASSIM $ARCHDIR/RESTARTS
+
+if [ $ys -ne $yp ]; then
+   cd $ARCHDIR
+   #cp -f $wdir/assim_phy/ANINCR.NC $ARCHDIR/ASSIM/ANINCR_${DTG}.NC
+   #cp -f $wdir/assim_ice/ANINCR.NC $ARCHDIR/ASSIM/ANINCR_ICE_${DTG}.NC
+   cp -f $wdir/assim_phy/ANINCR.NC $ARCHDIR/RESTARTS/ANINCR_${DTG}.NC
+   cp -f $wdir/assim_ice/ANINCR.NC $ARCHDIR/RESTARTS/ANINCR_ICE_${DTG}.NC
+fi
+
+odir=${ARCHDIR}/ASSIM
+mkdir -p $odir
+
+if [ ! -d $wdir/assim_phy ]; then
+  cd $EXPDIR
+    #rm -rf $DTG
+  exit 0
+fi
+
+cp -f $wdir/assim_ice/ANINCR.NC $odir/ANINCR_ICE_${DTG}.NC
+
+cd $wdir/assim_phy || exit -1
+
+cp -f ANINCR.NC  $odir/ANINCR_${DTG}.NC
+
+odir=${ARCHDIR}/ASSIM_STATS
+mkdir -p $odir
+
+for f in COST.DAT* LOG_3DVAR*
+do
+        mv -f $f $odir/${f}_${DTG}
+done
+mv -f $wdir/assim_ice/COST.DAT  $odir/COST_ICE.DAT_${DTG}
+mv -f $wdir/assim_ice/LOG_3DVAR  $odir/LOG_3DVAR_ICE_${DTG}
+
+for f in $odir/COST.DAT_*; do
+ mv -f $f `echo $f | sed -e "s/COST.DAT_/COST.DAT.0000_/g"`
+done
+for f in $odir/LOG_3DVAR_*; do
+ mv -f $f `echo $f | sed -e "s/LOG_3DVAR_/LOG_3DVAR.0000_/g"`
+done
+
+odir=${ARCHDIR}/OBSNC
+mkdir -p $odir
+
+mv -f $wdir/assim_ice/OBSSTAT.NC  $odir/OBSSTAT_ICE.NC_${DTG}
+for f in OBSSTAT*.NC*
+do
+        mv -f $f $odir/${f}_${DTG}
+done
+
+odir=${ARCHDIR}/OBSMIS
+mkdir -p $odir
+
+[[ -f INSMIS_ALL.bin ]] && cp -f INSMIS_ALL.bin $odir/INSMIS_ALL_${DTG}.bin
+[[ -f SLAMIS_ALL.bin ]] && cp -f SLAMIS_ALL.bin $odir/SLAMIS_ALL_${DTG}.bin
+[[ -f OBS_TAB.BIN ]] && cp -f OBS_TAB.BIN $odir/OBS_TAB_${DTG}.BIN
+
+cd $EXPDIR
+  #rm -rf $DTG
+
+exit 0

@@ -1,0 +1,2 @@
+ppl shaset reset;set win/asp=0.9;set viewport ul;fill/lev=(-inf)(230,300,2)(inf) t2m[d=2,l=10]*mask[d=3];set viewport ur;fill/lev=(-inf)(230,300,2)(inf) t10m[d=1,l=10]*mask[d=3];set viewport lr;ppl shaset reset;fill/lev=(-inf)(-1.5,1.5,0.1)(inf)/pal=cmocean_balance ((t10m[d=1,l=10]*mask[d=3])-(t2m[d=2,l=10]*mask[d=3]))*mask[d=3]
+frame/file=tempertaure_10m_2m_ECMWF_y2021m01h10.gif
