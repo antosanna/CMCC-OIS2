@@ -32,7 +32,11 @@ do
    rsync -av  $OIS2_scripts/env_batch.xml $DIR_CASES_OIS2/OPSLAMB$member/LockedFiles
    rsync -av  $OIS2_scripts/env_workflow.xml $DIR_CASES_OIS2/OPSLAMB$member
    rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm
-   rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm_streams$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm_streams
+   if [[ $member -eq 0 ]] ; then
+      rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm_streams$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm_streams
+   else
+      rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm_streams$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm_streams$member
+   fi
 #   rsync -av $OIS2_input/STATIC_user_nl/datm/datm.streams.xml $DIR_CASES_OIS2/OPSLAMB$member/CaseDocs
 
 done

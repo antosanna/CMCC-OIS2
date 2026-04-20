@@ -2,7 +2,7 @@
 #BSUB -J run_assim_dummy_expname
 #BSUB -e logs/run_assim_dummy_expname_%J.err
 #BSUB -o logs/run_assim_dummy_expname_%J.out
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -M 1000
 #BSUB -sla SC_SERIAL_sps35
 #BSUB -app SERIAL_sps35
@@ -571,7 +571,7 @@ EOF
                 ##_----------------------------------------------------------------------------------------------------
     echo "About to run 3DVar PHY .."
    
-#                job_ov=$( bsub -q p_short -x   -n 72 -P 0490 -o ${WORKDIR}/LOGCESM/VAR3DPHY_${EADTG}_%J.out -e ${WORKDIR}/LOGCESM/VAR3DPHY_${EADTG}_%J.err "${EXPDIR}/solo_phyvar.sh ${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA} ${MISFIT_DIR} ${RFC_DIR} ${IB_DIR} ${EOF_DIR} ${VAR_EXEDIR} ${NPROC_VAR} ${NPROC_FRC} ${EADTG} ${DTG}")
+#                job_ov=$( bsub -q p_short -x   -n 72 -P 0784 -o ${WORKDIR}/LOGCESM/VAR3DPHY_${EADTG}_%J.out -e ${WORKDIR}/LOGCESM/VAR3DPHY_${EADTG}_%J.err "${EXPDIR}/solo_phyvar.sh ${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA} ${MISFIT_DIR} ${RFC_DIR} ${IB_DIR} ${EOF_DIR} ${VAR_EXEDIR} ${NPROC_VAR} ${NPROC_FRC} ${EADTG} ${DTG}")
     job_ov=$( $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $parallelq_s -E yes -N 5 -j solo_phyvar_${EXPNAME} -l ${EXPDIR}/logs -d $EXPDIR -s solo_phyvar.sh -M 5000 -i "${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA} ${MISFIT_DIR} ${RFC_DIR} ${IB_DIR} ${EOF_DIR} ${VAR_EXEDIR} ${NPROC_VAR} ${NPROC_FRC} ${EADTG} ${DTG}")
    
     varjobid_phy=`echo $job_ov | cut -d "<" -f2 | cut -d ">" -f1`
@@ -594,7 +594,7 @@ EOF
 
     echo "About to run 3DVar ICE .."
     mkdir -p ${EXPDIR}/logs
-#                job_ov=$(bsub  -q p_short -x  -n ${NPROC_ICEVAR} -P 0490 -J solo_icevar_${EXPNAME} -o ${WORKDIR}/LOGCESM/ICEVAR3D_${EADTG}_%J.out -e ${WORKDIR}/LOGCESM/ICEVAR3D_${EADTG}_%J.err "${EXPDIR}/solo_icevar.sh ${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA_ICE} ${IB_DIR} ${EOFICE_DIR} ${VAR_EXEDIR} ${NPROC_ICEVAR} ${NPROC_FRC} ${SIC_ARC} ${SIT_ARC} ${EADTG} ${DTG}")
+#                job_ov=$(bsub  -q p_short -x  -n ${NPROC_ICEVAR} -P 0784 -J solo_icevar_${EXPNAME} -o ${WORKDIR}/LOGCESM/ICEVAR3D_${EADTG}_%J.out -e ${WORKDIR}/LOGCESM/ICEVAR3D_${EADTG}_%J.err "${EXPDIR}/solo_icevar.sh ${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA_ICE} ${IB_DIR} ${EOFICE_DIR} ${VAR_EXEDIR} ${NPROC_ICEVAR} ${NPROC_FRC} ${SIC_ARC} ${SIT_ARC} ${EADTG} ${DTG}")
     job_ov=$($DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $parallelq_s -E yes -N 5 -j solo_icevar_${EXPNAME} -l ${EXPDIR}/logs -d ${EXPDIR} -s solo_icevar.sh -i "${EXPDIR} ${EXPNAME} ${WORKDIR} ${ENDDATE} ${VAR_LENGTH} ${STATIC_DA_ICE} ${IB_DIR} ${EOFICE_DIR} ${VAR_EXEDIR} ${NPROC_ICEVAR} ${NPROC_FRC} ${SIC_ARC} ${SIT_ARC} ${EADTG} ${DTG}")
 
     varjobid=`echo $job_ov | cut -d "<" -f2 | cut -d ">" -f1`

@@ -2,7 +2,7 @@
 #BSUB -e Err2
 #BSUB -o Out2
 #BSUB -q s_long
-#BSUB -P 0490
+#BSUB -P 0784
 
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh

@@ -1,7 +1,7 @@
 #!/bin/sh -l
 #BSUB -e Out
 #BSUB -o Out
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -q s_long
 #BSUB -M 20G
 . ~/.bashrc

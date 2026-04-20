@@ -2,7 +2,7 @@
 #BSUB -J run_assim_OPSLAMB0
 #BSUB -e logs/run_assim_%J.err
 #BSUB -o logs/run_assim_%J.out
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -M 1000
 #BSUB -sla SC_SERIAL_sps35
 #BSUB -app SERIAL_sps35

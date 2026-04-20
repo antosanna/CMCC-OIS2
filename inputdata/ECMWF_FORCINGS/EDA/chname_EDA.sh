@@ -3,7 +3,7 @@
 #BSUB -o out_ch
 #BSUB -q s_long
 #BSUB -M 80G
-#BSUB -P 0490
+#BSUB -P 0784
 
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh

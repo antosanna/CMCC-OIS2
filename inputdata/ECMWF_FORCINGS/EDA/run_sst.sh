@@ -4,7 +4,7 @@
 #BSUB -o ERA5tq10m_%J.out
 #BSUB -e ERA5tq10m_%J.err
 #BSUB -q s_long
-#BSUB -P 0490
+#BSUB -P 0784
 
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh

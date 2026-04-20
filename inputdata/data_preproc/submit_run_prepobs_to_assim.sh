@@ -9,7 +9,7 @@
 #BSUB -J prepobs_to_assim          # Name of the job.
 #BSUB -o /work/cmcc/cp1/CPS/CMCC-OIS2/logs/data_prepobs/prepobs_to_assim%J.out  # Appends std output to file %J.out.
 #BSUB -e /work/cmcc/cp1/CPS/CMCC-OIS2/logs/data_prepobs/prepobs_to_assim%J.err  # Appends std error to file %J.err.
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -q p_long
 #BSUB -M 50G
 

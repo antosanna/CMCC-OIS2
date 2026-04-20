@@ -1,5 +1,5 @@
 #!/bin/sh -l
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -q s_long
 #BSUB -o /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/SLA/download_SLA_offline_%J.out
 #BSUB -e /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/SLA/download_SLA_offline_%J.err

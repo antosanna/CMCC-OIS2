@@ -1,5 +1,5 @@
 #!/bin/sh -l
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -q s_long
 #BSUB -M 1G
 #BSUB -o /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/cobe_SST/download_cobesst_offline.%J.out

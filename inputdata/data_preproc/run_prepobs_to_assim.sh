@@ -39,13 +39,12 @@ set -euvx
 #--- 1. Initialize main variables
 cd ${DIR_PREPOBS}
 
-EXPNAME=data_preproc
 MYCONF=102
 
-[[ -s ${DIR_PREPOBS}/enddate_to_assim ]] || \
+[[ -s ${PREPOBS_config}/enddate_to_assim ]] || \
   { echo "No enddate_to_assim file, exiting!" ; exit 2 ; }
 
-DTG=`cat ${DIR_PREPOBS}/enddate_to_assim`
+DTG=`cat ${PREPOBS_config}/enddate_to_assim`
 # end of present prepobs
 
 # today
@@ -58,7 +57,7 @@ md1VAR_LENGTH=$(( $VAR_LENGTH -1 ))
 # 6 days advancement $DTG + 7 - 1
 DTGmd1=`eval $ADDDTG $DTG -24`  #later added +23 in oder to have a timewindow of 6days and 23 hours
 
-WORKDIR=${OIS2_work_inpdir}/$EXPNAME/$DTG/assim
+WORKDIR=${PREPOBS_wdir}/$DTG/assim
 
 [[ -d $WORKDIR ]] && rm -rf $WORKDIR/*
 mkdir -p $WORKDIR
@@ -379,8 +378,9 @@ if [ $DTG -gt $END_DATE ]; then
    exit 0
 fi
 NEWDTG=`eval $ADDDTG $DTG +$VAR_LENGTH`
-mv enddate_to_assim enddate_to_assim.`date +%s`
-cat > ${DIR_PREPOBS}/enddate_to_assim <<EOF
+
+mv ${PREPOBS_config}/enddate_to_assim ${PREPOBS_config}/enddate_to_assim.`date +%s`
+cat > ${PREPOBS_config}/enddate_to_assim <<EOF
 ${NEWDTG}
 EOF
 

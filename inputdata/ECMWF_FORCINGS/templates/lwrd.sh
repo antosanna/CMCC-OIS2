@@ -2,7 +2,7 @@
 ###BSUB -n 35
 ##BSUB -e Err2
 ##BSUB -o Out2
-##BSUB -P 0490
+##BSUB -P 0784
 ##BSUB -q s_long
 
 . ~/.bashrc

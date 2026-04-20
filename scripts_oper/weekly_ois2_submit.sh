@@ -14,16 +14,18 @@ fi
 mkdir -p $OIS2_logdir/WEEKLY_SUBMISSION
 LOG_FILE=$OIS2_logdir/WEEKLY_SUBMISSION/weekly_ois2_submit_`date +%Y%m%d%H%M`
 exec 3>&1 1>>${LOG_FILE} 2>&1
-
+today_yy=`date +%Y`
+today_mm=`date +%m`
 today_dd=`date +%d`
 if [[ ${today_dd} == "01" ]] ; then
   #launched to produce forecast IC - checking the flag for reanalysis of 2 month before
-  today_yymmm4rean=`date +%Y%m -d "-2 month"`
+  today_yymmm4rean=`date -d ' '${today_yy}${today_mm}15' - 2 month' +%Y%m` #`date +%Y%m -d "-2 month"`
   is_forecast=1
   forecast_day=`date +%Y%m%d`
 else
   #launched as weekly analysis - checking the flag for reanalysis of 1 month before
-  today_yymmm4rean=`date +%Y%m -d "-1 month"` 
+  today_yymmm4rean=`date -d ' '${today_yy}${today_mm}15' - 1 month' +%Y%m` #`date +%Y%m -d "-1 month"`   
+  #date of the current month explicitly put to 15 to avoid problems on the 31st
   is_forecast=0
   forecast_day="DUMMY"
 fi
@@ -51,8 +53,13 @@ fi
 # this variable is not used yet reminds how config is structured
 #saturday_before_starting_saturday=`date -d "$starting_saturday -7 days" +%Y%m%d`
 
+
+jobsrunning=`$DIR_UTIL_OIS2/findjobs.sh -n OPSLAMB -c yes`
 # this step update ENDDATE in each run_assum script for every perturbation
-$OIS2_scripts/update_assim.sh
+if [[ $jobsrunning -eq 0 ]] ; then
+   #DO THE UPDATE ONLY IF THERE ARE NO MEMBERS RUNNING
+   $OIS2_scripts/update_assim.sh
+fi
 
 #for member in 0 1 2 7 8
 for member in {0..8}

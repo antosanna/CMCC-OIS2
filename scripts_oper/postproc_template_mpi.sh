@@ -3,7 +3,7 @@
 #BSUB -o logs/REAN-PP_%J.out  # Appends std output to file %J.out.
 #BSUB -e logs/REAN-PP_%J.err  # Appends std error to file %J.err.
 #BSUB -q p_short
-#BSUB -P 0490
+#BSUB -P 0784
 ##BSUB -R "rusage[mem=30G]"
 ##BSUB -M 30G
 #BSUB -x

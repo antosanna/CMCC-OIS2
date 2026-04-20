@@ -2,7 +2,7 @@
 #BSUB -J copy_restart
 #BSUB -e /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/copy_restart_%J.err
 #BSUB -o /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/copy_restart_%J.out
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -M 1000
 #BSUB -q s_medium
 

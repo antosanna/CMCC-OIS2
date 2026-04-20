@@ -1,5 +1,5 @@
 #!/bin/sh -l
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -M 1G
 #BSUB -q s_long
 #BSUB -J download_cryosat2_SIT

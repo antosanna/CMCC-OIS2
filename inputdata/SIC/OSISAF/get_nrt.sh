@@ -3,7 +3,7 @@
 #BSUB -e /users_home/cmcc/cp1/CPS/CMCC-OIS2/logs/download_SIC_%J.err
 #BSUB -J dowonload_SIC
 #BSUB -q s_long
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB  -M 3G
 #https://thredds.met.no/thredds/catalog/osisaf/met.no/reprocessed/ice/conc_cra_files/2025/05/catalog.html
 

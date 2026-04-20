@@ -4,7 +4,7 @@
 #BSUB -e ../../../logs/mv_ERA5_%J.err
 #BSUB -q s_long
 #BSUB -M 1G
-#BSUB -P 0490
+#BSUB -P 0784
 
 
 

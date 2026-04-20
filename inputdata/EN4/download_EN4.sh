@@ -1,7 +1,7 @@
 #!/bin/sh -l
 #BSUB -e Out
 #BSUB -o Out
-#BSUB -P 0490
+#BSUB -P 0784
 #BSUB -q s_long
 #BSUB -M 20G
 . ~/.bashrc
@@ -18,6 +18,17 @@ else
    y=$1
    m=$2
 fi
+ytod=`date +%Y`
+mtod=`date +%m`
+dtod=`date +%d`
+if [[ ${ytod}${mtod} -eq ${y}${m} && $((10#$dtod)) -lt 16 ]]
+then
+   echo "today is ${ytod}${mtod}${dtod} and EN4 data are not reliable even if available! Exiting now"
+   exit 0
+fi  
+
+
+
 #out=/archive/ans012/C-GLORSv7/EN4_ORCA025
 dwn=1
 nrt=1 
@@ -37,10 +48,11 @@ dd=$(date +%Y%m%d -d "$current_yyyymm" | cut -c 1-6 )
 dd_m1=$(date +%Y%m%d -d "$current_yyyymm -1 month" | cut -c 1-6 )
 dd_m2=$(date +%Y%m%d -d "$current_yyyymm -2 month" | cut -c 1-6 )
 
+url_en4="https://www.metoffice.gov.uk/hadobs/en4/data/en4-2-1"
 if [ $dwn -eq 1 ]; then
-     wget --inet4-only http://hadobs.metoffice.com/en4/data/en4-2-1/EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz -O EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz
+     wget --inet4-only ${url_en4}/EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz -O EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz
      [[ -f "EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz" ]] &&  gunzip EN.4.2.2.p.analysis.c14.${dd_m2}.nc.gz && mv EN.4.2.2.p.analysis.c14.${dd_m2}.nc EN.4.2.2.f.analysis.c14.${dd_m2}.nc
-     wget --inet4-only http://hadobs.metoffice.com/en4/data/en4-2-1/EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz -O EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz
+     wget --inet4-only ${url_en4}/EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz -O EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz
      [[ -f "EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz" ]] &&  gunzip EN.4.2.2.p.analysis.c14.${dd_m1}.nc.gz && mv EN.4.2.2.p.analysis.c14.${dd_m1}.nc EN.4.2.2.f.analysis.c14.${dd_m1}.nc	
 fi
 
