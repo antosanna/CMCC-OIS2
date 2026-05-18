@@ -24,8 +24,16 @@ m1=`date -d "$yy${mm}15 - 1 month" +%m`
 y1=`date -d "$yy${mm}15 - 1 month" +%Y`
 
 mkdir -p $OIS2_work_inpdir/SIC/OSISAF/TEMPORARY 
-mkdir -p $OIS2_work_inpdir/SIC/OSISAF/$y1
-mkdir -p $OIS2_work_inpdir/SIC/OSISAF/$yy
+
+data_arch_y1=$OIS2_data/inputdata/SIC/OSISAF/$y1
+data_arch_yy=$OIS2_data/inputdata/SIC/OSISAF/$yy
+mkdir -p ${data_arch_y1}
+mkdir -p ${data_arch_yy}
+
+work_arch_y1=$OIS2_work_inpdir/SIC/OSISAF/$y1
+work_arch_yy=$OIS2_work_inpdir/SIC/OSISAF/$yy
+mkdir -p ${work_arch_y1}
+mkdir -p ${work_arch_yy}
 
 repo=conc-cont-reproc-amsr   #conc-cont-reproc #update oct 2025
 
@@ -42,8 +50,9 @@ for f in ice*.nc; do
       hh=`echo $f | cut -d_ -f3`
       dd=`echo $f | rev | cut -d_ -f1 | cut -d. -f2 | rev | cut -c 1-8`
       gzip $f
-      rm -f ../$y1/ice2_${hh}_${dd}.nc.gz
-      mv $f.gz ../$y1/ice2_${hh}_${dd}.nc.gz || exit 3
+      rm -f ${data_arch_y1}/ice2_${hh}_${dd}.nc.gz
+      mv $f.gz ${data_arch_y1}/ice2_${hh}_${dd}.nc.gz || exit 3
+      rsync -av ${data_arch_y1}/ice2_${hh}_${dd}.nc.gz ${work_arch_y1}/.
 done
 
 
@@ -55,8 +64,8 @@ for f in ice*.nc; do
       hh=`echo $f | cut -d_ -f3`
       dd=`echo $f | rev | cut -d_ -f1 | cut -d. -f2 | rev | cut -c 1-8`
       gzip $f
-      rm -f ../$yy/ice2_${hh}_${dd}.nc.gz
-      mv $f.gz ../$yy/ice2_${hh}_${dd}.nc.gz || exit 3
+      rm -f ${data_arch_yy}/ice2_${hh}_${dd}.nc.gz
+      mv $f.gz ${data_arch_yy}/ice2_${hh}_${dd}.nc.gz || exit 3
+      rsync -av ${data_arch_yy}/ice2_${hh}_${dd}.nc.gz ${work_arch_yy}/.
 done
-
 

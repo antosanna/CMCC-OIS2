@@ -30,6 +30,7 @@ WORK="/work/cmcc/cp1"
 DATA="/data/delivery/csp/cp1/in/"
 PERT_NEMO_DATA=$DATA/EDA/pert_nemo/
 ERA5_DATA=$DATA/ERA5/input/oper_daily/ecm_mars
+OIS2_data="/data/cmcc/cp1/CPS/CMCC-OIS2/"
 OIS2_work="${WORK}/CPS/CMCC-OIS2"
 #OIS2_CASES="${OIS2_home}/exps"
 OIS2_WORK="$OIS2_work/run_oce_assim"
@@ -68,9 +69,11 @@ envcondaOIS2=/work/cmcc/ac28919/.coper
 envcondacm3=cmcc-cm_py39
 
 
-serialq_s=s_medium
+serialq_s=s_short
+serialq_m=s_medium
 serialq_l=s_long
 parallelq_s=p_short
+parallelq_m=p_medium
 parallelq_l=p_long
 operational_user="cp1"
 pID="0784"

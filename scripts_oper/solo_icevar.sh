@@ -68,7 +68,7 @@ PREV_DTG=${15}
 
 export OMP_NUM_THREADS=$NPROC_ICEVAR
 
-NAME_VAREXE="var_3d_juno_mpi_ice.x"
+NAME_VAREXE="var_3d_${machine}_mpi_ice.x"
 echo ""
 echo "-----------------From 3DVAR script  ---------------"
 echo " EXPDIR     :: " ${EXPDIR}

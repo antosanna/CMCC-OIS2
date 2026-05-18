@@ -16,6 +16,7 @@ input_dir_em=$OIS2_work/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/
 mkdir -p $input_dir_em
 input_dir_out=$OIS2_work/ECMWF_FORCINGS/EDA/${MEMB}_daily/ARCHIVE/
 
+em_arch_dir=$OIS2_data/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE
 
 tmp="q2m t2m td2m sp mslp sst wind10m precip snow swrd lwrd t10m q10m"
 dim=`echo $tmp|wc -w`
@@ -40,5 +41,6 @@ for par in `seq 0 $dim_m1` ; do
        fi
    	   cdo sub $f ${input_dir_em}/$fem ../ANOM/ANOM_$f 
        rm -f $f
+       rsync -auv ${input_dir_em}/$fem $em_arch_dir
 done
 

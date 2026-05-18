@@ -27,17 +27,15 @@ then
    exit 0
 fi  
 
-
-
-#out=/archive/ans012/C-GLORSv7/EN4_ORCA025
 dwn=1
 nrt=1 
+
 cd $OIS2_work_inpdir/EN4
 cp $sosie_exe .
 cp ${OIS2_work_inpdir}/EN4/static/mesh_mask.nc .
-#mkdir -p $out
 
-
+EN4_archdir=${OIS2_data}/inputdata/EN4
+mkdir -p ${EN4_archdir}
 
 current_yyyymm=$y${m}15
 current_yyyymm_m1=$(date +%Y%m%d -d "$current_yyyymm -1 month" )
@@ -60,9 +58,8 @@ fi
 for yymm in ${dd_m1} ${dd_m2}; do
     y=$(echo $yymm | cut -c 1-4 )
     mm=$(echo $yymm | cut -c 5-6 )
- 
     if [ -f "EN.4.2.2.f.analysis.c14.${yymm}.nc" ]; then
-
+       cd $OIS2_work_inpdir/EN4   
        fin=EN.4.2.2.f.analysis.c14.${yymm}.nc
        sed -e "s#_FIN_#$fin#g" -e "s#_TS_#${yymm}#g" ${OIS2_input}/EN4/nams_1-475 > nam.tmp
        ./sosie.x -f nam.tmp || exit 1
@@ -71,21 +68,24 @@ for yymm in ${dd_m1} ${dd_m2}; do
        mv -f vosaline_EN4-ORCA025_${yymm}.nc vosaline_EN4-ORCA025_y${y}m${mm}.nc || exit
        ncrename -h -d z,dep -v gdept_1d,dep vosaline_EN4-ORCA025_y${y}m${mm}.nc || exit
        ncwa -h -d dep,0 -a dep vosaline_EN4-ORCA025_y${y}m${mm}.nc -O sss_EN4-ORCA025_y${y}m${mm}.nc || exit
+       
+       rsync -auv $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${y}m${mm}.nc ${EN4_archdir}
+       rsync -auv $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${y}m${mm}.nc ${EN4_archdir}
        cd  ${EN4_STATIC_dir}
-       ln -sf $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${y}m${mm}.nc  .
-       ln -sf $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${y}m${mm}.nc .
+       ln -sf $EN4_archdir/sss_EN4-ORCA025_y${y}m${mm}.nc  .
+       ln -sf $EN4_archdir/vosaline_EN4-ORCA025_y${y}m${mm}.nc .
        cd  ${OTHER_STATIC_dir}/T3D
-       ln -sf $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${y}m${mm}.nc  .
-       ln -sf $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${y}m${mm}.nc .
+       ln -sf $EN4_archdir/sss_EN4-ORCA025_y${y}m${mm}.nc  .
+       ln -sf $EN4_archdir/vosaline_EN4-ORCA025_y${y}m${mm}.nc .
        cd $OIS2_work_inpdir/EN4
        mv -f votemper_EN4-ORCA025_${y}${mm}.nc votemper_EN4-ORCA025_y${y}m${mm}.nc || exit
        ncrename -h -d z,dep -v gdept_1d,dep votemper_EN4-ORCA025_y${y}m${mm}.nc || exit
        ncap2 -h -s "votemper=float(votemper-273.15);" votemper_EN4-ORCA025_y${y}m${mm}.nc -O votemper_EN4-ORCA025_y${y}m${mm}.nc || exit 5
+       rsync -auv $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${y}m${mm}.nc ${EN4_archdir}
        cd  ${EN4_STATIC_dir}
-       ln -sf $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
+       ln -sf $EN4_archdir/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
        cd  ${OTHER_STATIC_dir}/T3D
-       ln -sf $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
-       cd $OIS2_work_inpdir/EN4   
+       ln -sf $EN4_archdir/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
        touch $OIS2_logdir/EN4/donwload_${yymm}_ok
    fi
 done
@@ -94,6 +94,7 @@ yy=$(date +%Y%m%d -d "${dd}15" | cut -c 1-4 )
 mm=$(date +%Y%m%d -d "${dd}15" | cut -c 5-6 )
 m1=$(date +%Y%m%d -d "${dd}15 -1 month" | cut -c 5-6 )
 y1=$(date +%Y%m%d -d "${dd}15 -1 month" | cut -c 1-4 )
+cd $OIS2_work_inpdir/EN4   
 
 ncks -F -d time_counter,$mm ${OIS2_work_inpdir}/EN4/static/EN4-ORCA025n42_clim.nc -O h1.nc
 ncks -F -d time_counter,$m1 ${OIS2_work_inpdir}/EN4/static/EN4-ORCA025n42_clim.nc -O h2.nc
@@ -107,12 +108,16 @@ ncbo -h --op_typ add  vosaline_EN4-ORCA025_y${y1}m${m1}.nc anom.nc -O vosaline_E
 ncap2 -s "where(vosaline < 0.01 ) vosaline = 0.01" vosaline_EN4-ORCA025_y${yy}m${mm}.nc -O vosaline_EN4-ORCA025_y${yy}m${mm}.nc || exit
 ncwa -h -d dep,0 -a dep vosaline_EN4-ORCA025_y${yy}m${mm}.nc -O sss_EN4-ORCA025_y${yy}m${mm}.nc || exit
 
+rsync -auv $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${yy}m${mm}.nc ${EN4_archdir}
+rsync -auv $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${yy}m${mm}.nc ${EN4_archdir}
+rsync -auv $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${yy}m${mm}.nc ${EN4_archdir}
+ 
 cd  ${EN4_STATIC_dir}
-ln -sf $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${yy}m${mm}.nc  .
-ln -sf $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${yy}m${mm}.nc .
-ln -sf $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${yy}m${mm}.nc .
+ln -sf ${EN4_archdir}/sss_EN4-ORCA025_y${yy}m${mm}.nc  .
+ln -sf ${EN4_archdir}/vosaline_EN4-ORCA025_y${yy}m${mm}.nc .
+ln -sf ${EN4_archdir}/votemper_EN4-ORCA025_y${yy}m${mm}.nc .
 
 cd  ${OTHER_STATIC_dir}/T3D
-ln -sf $OIS2_work_inpdir/EN4/sss_EN4-ORCA025_y${yy}m${mm}.nc  .
-ln -sf $OIS2_work_inpdir/EN4/vosaline_EN4-ORCA025_y${yy}m${mm}.nc .
-ln -sf $OIS2_work_inpdir/EN4/votemper_EN4-ORCA025_y${yy}m${mm}.nc .
+ln -sf ${EN4_archdir}/sss_EN4-ORCA025_y${yy}m${mm}.nc  .
+ln -sf ${EN4_archdir}/vosaline_EN4-ORCA025_y${yy}m${mm}.nc .
+ln -sf ${EN4_archdir}/votemper_EN4-ORCA025_y${yy}m${mm}.nc .

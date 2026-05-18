@@ -62,23 +62,30 @@ fi
 set +euvx
 . $DIR_UTIL_OIS2/load_nco
 set -euvx
-FINAL_DIR="$OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla/"
-FINAL_DIR_ERR="$OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla/"
+WORK_DIR="$OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla/"
+WORK_DIR_ERR="$OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla/"
+
+
+FINAL_DIR="$OIS2_data/inputdata/SLA/INTERP_SLA_eORCA025/cesm_sla/"
+FINAL_DIR_ERR="$OIS2_data/inputdata/SLA/INTERP_SLA_eORCA025/cesm_err_sla/"
+
 mkdir -p  ${FINAL_DIR}/${YY}
 mkdir -p  ${FINAL_DIR_ERR}/${YY}
 
-cp $OIS2_exe/sosie3.x ${FINAL_DIR}/
-cp $OIS2_exe/sosie3.x ${FINAL_DIR_ERR}/
+mkdir -p ${WORK_DIR}/${YY}
+mkdir -p ${WORK_DIR_ERR}/${YY}
+cp $OIS2_exe/sosie3.x ${WORK_DIR}/
+cp $OIS2_exe/sosie3.x ${WORK_DIR_ERR}/
 
 for listf in $(ls ${INDIR}/${YY}/nrt_global_allsat_phy_l4_${YY}${MM}*.nc);
 do   
     YYMMDD=$(ls ${listf} | rev | cut -d_ -f 2 | rev)
     if [ ! -e ${FINAL_DIR}/${YY}/sla_reg-eORCA25_${YYMMDD}.nc ]; then
 	      
-      cd ${FINAL_DIR}/
+      cd ${WORK_DIR}/
       FIN=file_${YYMMDD}.nc      
-      ncpdq -U  ${listf} -O ${FINAL_DIR}/$FIN 
-      ncks --mk_rec_dmn time ${FINAL_DIR}/$FIN -O ${FINAL_DIR}/$FIN
+      ncpdq -U  ${listf} -O ${WORK_DIR}/$FIN 
+      ncks --mk_rec_dmn time ${WORK_DIR}/$FIN -O ${WORK_DIR}/$FIN
       if [[ -f namelist ]]
       then
           rm namelist
@@ -89,13 +96,14 @@ do
       fi
       sed -e "s/_FILENAME_/$FIN/g;s/_DATEE_/${YYMMDD}/g"   $OIS2_home/inputdata/SLA/namelist_INTERP_2D_sla > namelist_${YYMMDD}
       ./sosie3.x -f namelist_${YYMMDD} 
-      mv sla_reg-eORCA25_${YYMMDD}.nc ${YY}
+      mv sla_reg-eORCA25_${YYMMDD}.nc $FINAL_DIR/${YY}
+      rsync -av ${FINAL_DIR}/${YY}/sla_reg-eORCA25_${YYMMDD}.nc ${WORK_DIR}/${YY}/. 
       rm ${FIN}
 
-      cd ${FINAL_DIR_ERR}/
+      cd ${WORK_DIR_ERR}/
       FIN_ERR=file_${YYMMDD}.nc
-      ncpdq -U  ${listf} -O ${FINAL_DIR_ERR}/${FIN_ERR} 
-      ncks --mk_rec_dmn time ${FINAL_DIR_ERR}/${FIN_ERR} -O ${FINAL_DIR_ERR}/${FIN_ERR}
+      ncpdq -U  ${listf} -O ${WORK_DIR_ERR}/${FIN_ERR} 
+      ncks --mk_rec_dmn time ${WORK_DIR_ERR}/${FIN_ERR} -O ${WORK_DIR_ERR}/${FIN_ERR}
 
       if [[ -f namelist_${YYMMDD} ]]
       then
@@ -104,6 +112,7 @@ do
       sed -e "s/_FILENAME_/$FIN/g;s/_DATEE_/${YYMMDD}/g"   $OIS2_home/inputdata/SLA/namelist_INTERP_2D_err_sla > namelist_${YYMMDD}
       ./sosie3.x -f namelist_${YYMMDD}
       mv err_reg-eORCA25_${YYMMDD}.nc ${FINAL_DIR_ERR}/${YY}
+      rsync -av ${FINAL_DIR_ERR}/${YY}/err_reg-eORCA25_${YYMMDD}.nc ${WORK_DIR_ERR}/${YY}/. 
       rm ${FIN_ERR}
 
   fi

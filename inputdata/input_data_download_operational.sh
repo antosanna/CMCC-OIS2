@@ -32,11 +32,12 @@ $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_SIC -l ${O
 mkdir -p ${OIS2_logdir}/SLA
 $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_SLA -l ${OIS2_logdir}/SLA -d $OIS2_input/SLA -M 5GB -s submit_download_interp_operational.sh 
 
-mkdir -p ${OIS2_logdir}/cobe_SST
-$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_cobe_SST -l ${OIS2_logdir}/cobe_SST -d $OIS2_input/SST/cobe -M 1GB -s download_cobe_operational.sh
+#NOT USED ANY MORE
+#mkdir -p ${OIS2_logdir}/cobe_SST
+#$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_cobe_SST -l ${OIS2_logdir}/cobe_SST -d $OIS2_input/SST/cobe -M 1GB -s download_cobe_operational.sh
 
-mkdir -p ${OIS2_logdir}/ers_SST
-$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_ers_SST -l ${OIS2_logdir}/ers_SST -d $OIS2_input/SST/ers -M 1GB -s download_ers_operational.sh
+#mkdir -p ${OIS2_logdir}/ers_SST
+#$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_ers_SST -l ${OIS2_logdir}/ers_SST -d $OIS2_input/SST/ers -M 1GB -s download_ers_operational.sh
 
 mkdir -p ${OIS2_logdir}/ESACCI_SST
 $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_ESACCI_SST -l ${OIS2_logdir}/ESACCI_SST -d $OIS2_input/SST/ESACCI -M 1GB -s submit_download_operational.sh 
@@ -48,4 +49,5 @@ $OIS2_input/ECMWF_FORCINGS/launch_postproc_ECMWF.sh   # log in $OIS2_logdir/ECMW
 
 mkdir -p ${OIS2_logdir}/data_preproc
 $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $parallelq_s -j data_preproc -l ${OIS2_logdir}/data_preproc -d $OIS2_input/data_preproc -M 40GB -s run_prepobs_to_assim.sh 
+$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_m -j mv_data_preproc2data -p data_preproc -l ${OIS2_logdir}/data_preproc -d $OIS2_input/data_preproc -M 5GB -s mv_data_preproc2data.sh 
 

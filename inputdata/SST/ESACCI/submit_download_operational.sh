@@ -31,9 +31,8 @@ else
    recover=1
 fi
 
-archdir=$OIS2_work_inpdir/SST/ESACCI/ARCHIVE
+archdir=$OIS2_data/inputdata/SST/ESACCI/ARCHIVE
 mkdir -p $archdir
-
 mkdir -p $OIS2_work/inputdata/SST/ESACCI/$YY
 
 cd $OIS2_work/inputdata/SST/ESACCI
