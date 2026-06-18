@@ -41,6 +41,10 @@ starting_saturday=`date -d "-$(($days_from_previous_saturday + 7)) days" +%Y%m%d
 
 if [[ $is_forecast -eq 0 ]] ; then
    starting_saturday=`date -d "-$(($days_from_previous_saturday + 7)) days" +%Y%m%d`
+   #defining explicitely $last_avail_day (even if not strictly necessary) avoids the "false-error" at the end of the weekly run
+   #for weekly analysis, last_avail_day is last saturday
+   last_avail_day=`date -d "- ${days_from_previous_saturday} days" +%Y%m%d`
+
 else
    if [[ $days_from_previous_sunday -le 1 ]] ; then
       # 1st of the month on Monday (last analysis run until two saturdays 
@@ -49,6 +53,8 @@ else
    else
       starting_saturday=`date -d "- $days_from_previous_saturday days" +%Y%m%d`
    fi
+   #1st of the month: last_avail_day is today (default enddate)
+   last_avail_day=`date +%Y%m%d`
 fi
 # this variable is not used yet reminds how config is structured
 #saturday_before_starting_saturday=`date -d "$starting_saturday -7 days" +%Y%m%d`
@@ -58,7 +64,7 @@ jobsrunning=`$DIR_UTIL_OIS2/findjobs.sh -n OPSLAMB -c yes`
 # this step update ENDDATE in each run_assum script for every perturbation
 if [[ $jobsrunning -eq 0 ]] ; then
    #DO THE UPDATE ONLY IF THERE ARE NO MEMBERS RUNNING
-   $OIS2_scripts/update_assim.sh
+   $OIS2_scripts/update_assim.sh $last_avail_day
 fi
 
 #for member in 0 1 2 7 8
@@ -75,18 +81,18 @@ do
        if [[ $datetorun -ne $starting_saturday ]]
        then
           if [[ $jobsrunning -eq 0 ]] ; then   #if nothing running, otherwise it is possible that reanalysis is still going on
-             title="[OIS2] OIS2 ERROR $EXPNAME weekly assimilation"
+             title="[OIS2 $machine] OIS2 ERROR $EXPNAME weekly assimilation"
              body="OIS2 $EXPNAME not submittable since config dates are not the expected"
              ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "$body" -t "$title"
           fi
           continue
        fi
-       title="[OIS2] OIS2 $EXPNAME weekly assimilation"
+       title="[OIS2 $machine] OIS2 $EXPNAME weekly assimilation"
        body="OIS2 $EXPNAME going to submit from $datetorun"
        ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "$body" -t "$title"
 
    else
-      title="[OIS2] OIS2 ERROR $EXPNAME"
+      title="[OIS2 $machine] OIS2 ERROR $EXPNAME"
       body="OIS2 $EXPNAME missing $configfile - skipping submission"
       ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "$body" -t "$title"
       continue

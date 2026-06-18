@@ -48,6 +48,6 @@ $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_l -j download_EN4 -l ${O
 $OIS2_input/ECMWF_FORCINGS/launch_postproc_ECMWF.sh   # log in $OIS2_logdir/ECMWF_FORCINGS/launch_preproc_`date +%Y%m%d%H%M`
 
 mkdir -p ${OIS2_logdir}/data_preproc
-$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $parallelq_s -j data_preproc -l ${OIS2_logdir}/data_preproc -d $OIS2_input/data_preproc -M 40GB -s run_prepobs_to_assim.sh 
+$DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $parallelq_m -j data_preproc -l ${OIS2_logdir}/data_preproc -d $OIS2_input/data_preproc -M 40GB -s run_prepobs_to_assim.sh 
 $DIR_UTIL_OIS2/submitcommand.sh -m $machine -q $serialq_m -j mv_data_preproc2data -p data_preproc -l ${OIS2_logdir}/data_preproc -d $OIS2_input/data_preproc -M 5GB -s mv_data_preproc2data.sh 
 
