@@ -85,7 +85,7 @@ then
    fi
 fi
 
-if [[ "$machine" == "zeus" ]] || [[ $machine == "juno" ]]
+if [[ "$machine" == "zeus" ]] || [[ $machine == "juno" ]] || [[ $machine == "cassandra" ]]
 then
    if [ ! -z $bcc ]
    then

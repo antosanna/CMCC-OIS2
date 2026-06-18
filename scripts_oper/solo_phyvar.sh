@@ -76,7 +76,7 @@ MERGED_EXE=${VAR_EXEDIR}/merge.x
 
 export OMP_NUM_THREADS=$NPROC_VAR
 
-NAME_VAREXE="var_3d_juno_mpi_sla_bia_lat_with_SLA_nemo42.x"
+NAME_VAREXE="var_3d_${machine}_mpi_sla_bia_lat_with_SLA_nemo42.x"
 echo ""
 echo "-----------------From 3DVAR script  ---------------"
 echo " EXPDIR     :: " ${EXPDIR}
@@ -200,18 +200,26 @@ SHUFFLE_OBS=${WORKDIR}/shuffle_obs.x
 
 # Shuffle observations
 echo " Running Shufle obs ... "
-
+set +euvx
+module purge
+module purge
+. ${DIR_UTIL_OIS2}/load_libs_3dvar
+set -euvx
 $SHUFFLE_OBS $NPROC_FRC || exit 2
 #--------------------------------------------------------------
 #recontruct
 
 set +euvx
-module purge
-module purge
 
 . $DIR_UTIL_OIS2/condaactivation.sh
-condafunction activate /work/cmcc/aspect/.nemo_rebuild
+condafunction activate $envcondanemo
 set -euvx
+if [[ ${machine} == "juno" ]]
+then
+     Nproc=55
+else
+     Nproc=1
+fi
 
 DTGno00=$(echo ${PREV_YMD} | cut -c 1-8)
 EDTGno00=$(echo ${DTG_YMD} | cut -c 1-8)
@@ -220,7 +228,8 @@ var="grid_T"
  while [ ${EXPDAT} -lt ${EDTGno00} ];
  do
     ff=$(ls -1 ${DTG_WDIR}/${EXPNAME}_1d*_${var}_*${EXPDAT}-${EXPDAT}* | head -1)
-     mpirun -n 55 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff
+#     mpirun -n 55 python /work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild/nemo_rebuild.py -i $ff
+     $mpirun4py_nemo_rebuild -n $Nproc python $DIR_NEMO_REBUILD/nemo_rebuild.py -i $ff
      EXPDAT=$(date -d "$EXPDAT + 1 days" +%Y%m%d)
  done
 
@@ -230,11 +239,14 @@ condafunction deactivate
 
 module purge
 module purge
-module load gcc-12.2.0 R/4.2.2
+. ${DIR_UTIL_OIS2}/load_libs_3dvar
+#module load gcc-12.2.0 R/4.2.2
 
-module load oneapi-2022.1.0/compiler-rt/2022.1.0 intel-2021.6.0/2021.6.0 impi-2021.6.0/2021.6.0 intel-2021.6.0/cdo-threadsafe intel-2021.6.0/nco intel-2021.6.0/ncview intel-2021.6.0/impi-2021.6.0/netcdf-c-threadsafe  intel-2021.6.0/impi-2021.6.0/netcdf-cxx-threadsafe intel-2021.6.0/impi-2021.6.0/netcdf-fortran-threadsafe intel-2021.6.0/impi-2021.6.0/parallel-netcdf  intel-2021.6.0/curl intel-2021.6.0/impi-2021.6.0/hdf5-threadsafe intel-2021.6.0/impi-2021.6.0/xios intel-2021.6.0/magics-threadsafe intel-2021.6.0/eccodes-threadsafe intel-2021.6.0/cmake oneapi-2022.1.0/tbb/2021.6.0 oneapi-2022.1.0/mkl/2022.1.0 intel-2021.6.0/tk/8.6.11-wa3ya
+#module load oneapi-2022.1.0/compiler-rt/2022.1.0 intel-2021.6.0/2021.6.0 impi-2021.6.0/2021.6.0 intel-2021.6.0/cdo-threadsafe intel-2021.6.0/nco intel-2021.6.0/ncview intel-2021.6.0/impi-2021.6.0/netcdf-c-threadsafe  intel-2021.6.0/impi-2021.6.0/netcdf-cxx-threadsafe intel-2021.6.0/impi-2021.6.0/netcdf-fortran-threadsafe intel-2021.6.0/impi-2021.6.0/parallel-netcdf  intel-2021.6.0/curl intel-2021.6.0/impi-2021.6.0/hdf5-threadsafe intel-2021.6.0/impi-2021.6.0/xios intel-2021.6.0/magics-threadsafe intel-2021.6.0/eccodes-threadsafe intel-2021.6.0/cmake oneapi-2022.1.0/tbb/2021.6.0 oneapi-2022.1.0/mkl/2022.1.0 intel-2021.6.0/tk/8.6.11-wa3ya
 set -euvx
 
+mkdir -p $OIS2_WORK/${EXPNAME}/SSH/
+mkdir -p $OIS2_WORK/${EXPNAME}/BIAS/
 DTGno00=$(echo ${PREV_YMD} | cut -c 1-8)
 EDTGno00=$(echo ${DTG_YMD} | cut -c 1-8)
 var="grid_T"
@@ -248,13 +260,18 @@ var="grid_T"
 
 
 set +euvx
-conda activate base
+if [[ $machine == "juno" ]]
+then
+   conda activate base
+elif [[ $machine == "cassandra" ]]
+then
+ . $HOME/load_miniconda
+ conda activate bias_sla_ois2
+fi
 set -euvx
 
 ddtemp1=$(date +%Y%m%d -d "${DTG_YMD} -7 day")
 ddtemp2=$(date +%Y%m%d -d "${DTG_YMD} -1 day")
-mkdir -p $OIS2_WORK/${EXPNAME}/SSH/
-mkdir -p $OIS2_WORK/${EXPNAME}/BIAS/
 sed -e "s/dummy_member/${EXPNAME}/g" ${OIS2_scripts}/calc_bias_template.py > $EXPDIR/calc_bias.py
 python $EXPDIR/calc_bias.py -s ${ddtemp1}  -e ${ddtemp2} --arch-gofs-mesh "$OIS2_work_inpdir/STATIC_DA_NEMO42/assim/"  --dir-sla-unbias "$OIS2_WORK/${EXPNAME}/SSH/" > $DIR_CASES_OIS2/$EXPNAME/logs/solo_phyvar_${EXPNAME}_calc_bias_py.out_`date +%s`
 
@@ -311,15 +328,14 @@ cp ${VAR_EXEDIR}/${NAME_VAREXE} ./MASTER || \
   { echo "No 3DVAR executable, aborting!" ; exit 12 ; }
 
 chmod +x MASTER
-
-time mpirun -n 6 ./MASTER -d ${YMD} -t 00 -c 0 -w $VAR_LENGTH > \
+time $mpicmd -n 6 ./MASTER -d ${YMD} -t 00 -c 0 -w $VAR_LENGTH > \
   3DVAR_${DTG}.out 2>&1 || \
   { echo "3DVAR returned non-zero status, aborting!" ; exit 12 ; }
 ls ANINCR.NC* || \
   { echo "3DVAR failed, aborting!" ; exit 12 ; }
 
 if [ $NNMPI -gt 1 ]; then
-mpirun -n 6	$MERGED_EXE || exit 12
+$mpicmd -n 6	$MERGED_EXE || exit 12
 mv ANINCR_T_MERGED.nc ANINCR_MERGED.NC
 ncks ANINCR_S_MERGED.nc -A ANINCR_MERGED.NC
 

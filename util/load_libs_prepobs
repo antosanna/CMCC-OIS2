@@ -1,6 +1,16 @@
 #!/bin/sh -l
+. ~/.bashrc
+. ${DIR_UTIL_OIS2}/descr_OIS2.sh
 
-source /etc/profile.d/modules.sh
-module load gcc-12.2.0/12.2.0  gcc-12.2.0/OpenBLAS/0.3.31  R/4.2.2  R/4.3.0
+if [[ $machine == "juno" ]]
+then
+   source /etc/profile.d/modules.sh
+   module load gcc-12.2.0/12.2.0  gcc-12.2.0/OpenBLAS/0.3.31  R/4.2.2  R/4.3.0
 
-module load oneapi-2022.1.0/compiler-rt/2022.1.0 intel-2021.6.0/2021.6.0 impi-2021.6.0/2021.6.0 intel-2021.6.0/cdo-threadsafe intel-2021.6.0/nco intel-2021.6.0/ncview intel-2021.6.0/impi-2021.6.0/netcdf-c-threadsafe  intel-2021.6.0/impi-2021.6.0/netcdf-cxx-threadsafe intel-2021.6.0/impi-2021.6.0/netcdf-fortran-threadsafe intel-2021.6.0/impi-2021.6.0/parallel-netcdf  intel-2021.6.0/curl intel-2021.6.0/impi-2021.6.0/hdf5-threadsafe intel-2021.6.0/impi-2021.6.0/xios intel-2021.6.0/magics-threadsafe intel-2021.6.0/eccodes-threadsafe intel-2021.6.0/cmake oneapi-2022.1.0/tbb/2021.6.0 oneapi-2022.1.0/mkl/2022.1.0
+   module load oneapi-2022.1.0/compiler-rt/2022.1.0 intel-2021.6.0/2021.6.0 impi-2021.6.0/2021.6.0 intel-2021.6.0/cdo-threadsafe intel-2021.6.0/nco intel-2021.6.0/ncview intel-2021.6.0/impi-2021.6.0/netcdf-c-threadsafe  intel-2021.6.0/impi-2021.6.0/netcdf-cxx-threadsafe intel-2021.6.0/impi-2021.6.0/netcdf-fortran-threadsafe intel-2021.6.0/impi-2021.6.0/parallel-netcdf  intel-2021.6.0/curl intel-2021.6.0/impi-2021.6.0/hdf5-threadsafe intel-2021.6.0/impi-2021.6.0/xios intel-2021.6.0/magics-threadsafe intel-2021.6.0/eccodes-threadsafe intel-2021.6.0/cmake oneapi-2022.1.0/tbb/2021.6.0 oneapi-2022.1.0/mkl/2022.1.0
+
+elif [[ $machine == "cassandra" ]]
+then
+
+     module load oneapi-2025.0.4/2025.0.4-bwtfc oneapi-2025.0.4/cdo-threadsafe  oneapi-2025.0.4/impi-2021.14.2 oneapi-2025.0.4/impi-2021.14.2/netcdf-fortran-threadsafe oneapi-2025.0.4/impi-2021.14.2/netcdf-c-threadsafe oneapi-2025.0.4/impi-2021.14.2/netcdf-cxx-threadsafe oneapi-2025.0.4/impi-2021.14.2/ncview oneapi-2025.0.4/impi-2021.14.2/nco oneapi-2025.0.4/impi-2021.14.2/parallel-netcdf oneapi-2025.0.4/curl oneapi-2025.0.4/impi-2021.14.2/hdf5-threadsafe oneapi-2025.0.4/magics-threadsafe oneapi-2025.0.4/eccodes-threadsafe oneapi-2025.0.4/gmake  oneapi-2025.0.4/impi-2021.14.2/ncview/2.1.9-47rr4 oneapi-2025.0.4/impi-2021.14.2/netcdf-c-threadsafe/4.9.2-wbdmu oneapi-2025.0.4/impi-2021.14.2/intel-oneapi-mkl/2024.2.2-frprs oneapi-2025.0.4/openssl/3.4.0-m3wyk oneapi-2025.0.4/magics-threadsafe/4.15.3-pr5zg
+fi

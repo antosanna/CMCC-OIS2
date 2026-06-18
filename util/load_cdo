@@ -48,7 +48,7 @@ elif [[ "${machine}" == "marconi" ]] ; then
      echo "problems in loading cdo modules"
      exit 1
   fi
-elif [[ "${machine}" == "leonardo" ]] ; then 
+elif [[ "${machine}" == "leonardo" ]] || [[ "${machine}" == "cassandra" ]] ; then 
     . $DIR_UTIL/condaactivation.sh
     condafunction activate env_tools
 fi

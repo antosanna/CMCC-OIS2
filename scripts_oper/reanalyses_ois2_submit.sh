@@ -15,7 +15,10 @@ days_from_previous_sunday=`date -d "$first_prev_month" +%w`
 days_from_previous_saturday=$(($days_from_previous_sunday + 1))
 starting_saturday=`date -d "$first_prev_month -$days_from_previous_saturday days" +%Y%m%d`
 saturday_before_starting_saturday=`date -d "$starting_saturday -7 days" +%Y%m%d`
-
+today=`date +%Y%m%d`
+days_from_last_sunday=`date -d "$today" +%w`
+days_from_last_saturday=$(($days_from_last_sunday + 1))
+last_avail_saturday=`date -d "${today} - ${days_from_previous_saturday} days" +%Y%m%d`
 today_yymmm1=`date +%Y%m -d "-1 month"`
 if [[ ! -f $OIS2_logdir/EN4/donwload_${today_yymmm1}_ok ]]
 then
@@ -30,19 +33,19 @@ fi
   
 
 # this step update ENDDATE in each run_assum script for every perturbation
-$OIS2_scripts/update_assim.sh
-#for member in {0..8}
+$OIS2_scripts/update_assim.sh ${last_avail_saturday}
+
 #for member in 0 1 2 7 8 3
 for member in {0..8}
 do
    
    EXPNAME=OPSLAMB${member}
-  configfile=$DIR_CASES_OIS2/$EXPNAME/config
+   configfile=$DIR_CASES_OIS2/$EXPNAME/config
    echo ${starting_saturday}00 > $configfile
    echo ${saturday_before_starting_saturday}00 >> $configfile
    tmp=`cat $configfile`
    datetorun=`echo ${tmp:0:10}`
-   title="[OIS2] OIS2 $EXPNAME reanalysis assimilation"
+   title="[OIS2-$machine] OIS2 $EXPNAME reanalysis assimilation"
    body="OIS2 $EXPNAME going to submit from $datetorun"
    ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "$body" -t "$title"
 

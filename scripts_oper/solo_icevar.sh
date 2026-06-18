@@ -222,10 +222,10 @@ while [ $id -le $d2 ]; do
      ln -sf ice2_nh_${id}.nc OSISAF_nh_${id}.nc
     fi
 [[ -e "CRYO2-SMOS_MERGED_nh_${id}.nc" ]] && rm CRYO2-SMOS_MERGED_nh_${id}.nc
-n_fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v206_01_l4sit.nc|wc -l)
+n_fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v*_01_l4sit.nc|wc -l)
 if [[ $n_fief -ne 0 ]]
 then
-   fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v206_01_l4sit.nc)
+   fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v*_01_l4sit.nc)
    cp $fief CRYO2-SMOS_MERGED_nh_${id}.nc #&& ncks -F -d xc,,,8 -d yc,,,5 CRYO2-SMOS_MERGED_nh_${id}.nc -O CRYO2-SMOS_MERGED_nh_${id}.nc
 fi
 
@@ -258,7 +258,13 @@ ln -sf $EOFICE_DIR/$EOF_FILE $EOF_FILE_LOC
    i=1
    run_date1=${start_date1}
    end_loop=${EYYYY}${EMM}${EDD}
-   echo -ne "ncea " > merge.ksh
+   if [[ -f merge.ksh ]]
+   then
+       rm merge.ksh
+   fi
+   echo -ne ". $DIR_UTIL_OIS2/load_cdo && " > merge.ksh
+   echo -ne "ncea " >> merge.ksh   
+   #echo -ne "ncea " > merge.ksh
    #EXPNAME=NEMO-CICE-PROTO07
    #PREV_WDIR=/work/cmcc/aspect/CESM2/archive/${EXPNAME}/ice/hist/
    while [ "${run_date1}" -lt "${end_date1}" ]; do

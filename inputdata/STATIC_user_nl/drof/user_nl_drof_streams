@@ -31,5 +31,6 @@
 !      <file>foo3</file>
 !   </datafiles>
 !------------------------------------------------------------------------
-rof.daiclim025:datafiles =/work/cmcc/aspect/CESM2/inputdata/STATIC_DA_NEMO42/ORCA025_cmip6_runoff_v1.2_mod.nc
+rof.daiclim025:datafiles =/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/STATIC_DA_NEMO42/ORCA025_cmip6_runoff_v1.2_mod.nc
+!rof.daiclim025:datafiles =/work/cmcc/aspect/CESM2/inputdata/STATIC_DA_NEMO42/ORCA025_cmip6_runoff_v1.2_mod.nc
 !rof.diatren_iaf_rx1:datafiles =/work/cmcc/aspect/CESM2/inputdata/rof/runoff.daitren.iaf.20120419.nc

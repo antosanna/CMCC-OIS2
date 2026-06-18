@@ -1,10 +1,10 @@
 #!/bin/sh -l
 #BSUB -P 0784
 #BSUB -M 1000
-#BSUB -q s_medium
+#BSUB -q s_download
 #BSUB -J download_cryosat2_SIT_test
-#BSUB -e /work/cmcc/cp1/CPS/CMCC-OIS2/logs/TEST/download_cryosat2_SIT_%J.err
-#BSUB -o /work/cmcc/cp1/CPS/CMCC-OIS2/logs/TEST/download_cryosat2_SIT_%J.out
+#BSUB -e /work/cmcc/cp1/CPS/CMCC-OIS2/logs/CRYOSAT_SIT/download_cryosat2_SIT_%J.err
+#BSUB -o /work/cmcc/cp1/CPS/CMCC-OIS2/logs/CRYOSAT_SIT/download_cryosat2_SIT_%J.out
 
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
@@ -12,13 +12,12 @@
 wget="/usr/bin/wget --inet4-only"
 set -euvx
 
-YY=2024
-MM=11
+YY=$1
+MM=$2
 YYm1=`date -d "${YY}${MM}15 -1 month" +%Y`
 MMm1=`date -d "${YY}${MM}15 -1 month" +%m`
-nrt=0 #near-realtime flag--> if 1 retrieve also from LATEST directory on remote repo
-#CRYODIR=$OIS2_work//inputdata/SIT/CryoSat_SMOS_merged/
-CRYODIR=$SCRATCHDIR/MARI/Cryosat_jan2026/
+nrt=1 #near-realtime flag--> if 1 retrieve also from LATEST directory on remote repo
+CRYODIR=$OIS2_work//inputdata/SIT/CryoSat_SMOS_merged/
 mkdir -p $CRYODIR
 mkdir -p $CRYODIR/TEMPORARY
 mkdir -p $CRYODIR/$YY
@@ -44,33 +43,46 @@ then
   var_new="sea_ice_thickness"
   unc_orig="analysis_sea_ice_thickness_unc"
   unc_new="sea_ice_thickness_uncertainty"
+  listaobs=`ls W_XX*_o_${version}*l4sit.nc`
+  for f in $listaobs ; do
+     rfile="${f/_o_/_r_}"
+     if [[ -f $rfile ]]; then
+        rm $f
+     fi
+  done 
+
+
   listaf=`ls W_XX*${version}*l4sit.nc` 
   for ff in $listaf 
   do
 
+    #degradation of the observation is needed in to have a number of grid point compliant to the v206 version on which the data assimilation has been tuned
+    #AndreaC suggests to avoid regridding (i.e. averaging obs to reduce the obs dimensionality) and to keep one point yes and one no to reduce the number of obs
+
     rootname=`echo $ff|rev|cut -d '.' -f2|rev`
     date_tag=`echo $ff|rev|cut -d '_' -f5,6|rev`
-    finalname=W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${date_tag}_r_v206_01_l4sit.nc
+    finalname=W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${date_tag}_${version}_01_l4sit.nc
     ncks -O -d xc,0,,2 -d yc,0,,2 "$ff" ${rootname}_sub.nc
     #ncap2 -O -s "${var_orig} = float(${var_new}); ${var_orig}@_FillValue =float(NaN); ${unc_orig} = float(${unc_new}); ${unc_orig}@_FillValue = float(NaN); xc = float(xc); yc = float(yc); lat = float(lat); lon = float(lon);" ${rootname}_sub.nc ${rootname}_float.nc
     ncap2 -O -s "${var_orig} = float(${var_new}); ${unc_orig} = float(${unc_new}); xc = float(xc); yc = float(yc); lat = float(lat); lon = float(lon);" ${rootname}_sub.nc ${rootname}_float.nc
     ncks -O -C -x -v ${var_new},${unc_new} ${rootname}_float.nc ${rootname}_def.nc
+    
     #example: date_tag=20241228_20250103
     year1tag=`echo ${date_tag}|cut -c1-4`
     year2tag=`echo ${date_tag}|cut -d '_' -f2|cut -c1-4`
+
+
     if [[ ${year1tag} -eq ${year2tag} ]] ; then
-       if [[ ${year1tag} -eq ${YY} ]] ; then
-          finalpath=$CRYODIR/$YY
+          finalpath=$CRYODIR/${year1tag}
+	  mkdir -p $finalpath
           rsync -auv ${rootname}_def.nc ${finalpath}/${finalname}
-      elif [[ ${year1tag} -eq ${YYm1} ]] ; then
-          finalpath=$CRYODIR/$YYm1
-          rsync -auv ${rootname}_def.nc ${finalpath}/${finalname} 
-      fi
     else
-       finalpath=$CRYODIR/$YY
-       rsync -auv ${rootname}_def.nc ${finalpath}/${finalname}
-       finalpath=$CRYODIR/$YYm1
-       rsync -auv ${rootname}_def.nc ${finalpath}/${finalname}
+       finalpath1=$CRYODIR/${year1tag}
+       mkdir -p $finalpath1
+       finalpath2=$CRYODIR/${year2tag}
+       mkdir -p $finalpath2
+       rsync -auv ${rootname}_def.nc ${finalpath1}/${finalname}
+       rsync -auv ${rootname}_def.nc ${finalpath2}/${finalname}
     fi  
 
   done

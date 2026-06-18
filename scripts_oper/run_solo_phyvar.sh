@@ -12,7 +12,8 @@ ENDDATE=dummy_enddate
 asm=`grep "asm" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 |sed 's/ *$//g'`
 VAR_LENGTH=$(( asm*24 ))        #in hours
 STATIC_DA=`grep "STATIC_DA" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'`
-MISFIT_DIR=`grep "MISFIT_DIR" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'  | sed 's/${EXPNAME}/'${EXPNAME}'/g'`
+MISFIT_DIR=${WORKDIR}
+#=`grep "MISFIT_DIR" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'  | sed 's/${EXPNAME}/'${EXPNAME}'/g'`
 RFC_DIR=`grep "RFC_DIR" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'`
 IB_DIR=`grep "IB_DIR" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'`
 EOF_DIR=`grep "EOF_DIR" $SCRFILE |head -1 | cut -d "#" -f1 | cut -d "=" -f2 | sed 's/ *$//g'`

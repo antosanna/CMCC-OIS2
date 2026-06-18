@@ -11,6 +11,23 @@ then
    alias rm="rm -f"
    alias cp="/bin/cp -f"
    alias mv="mv -f"
+   envcondacm3=cmcc-cm_py39
+   DIR_NEMO_REBUILD=/work/cmcc/aspect/GIT/py_nemo_rebuild/src/py_nemo_rebuild
+   mpirun4py_nemo_rebuild=mpirun
+   mpicmd=mpirun
+   envcondanemo=/work/cmcc/aspect/.nemo_rebuild
+elif [[ -n `echo $PS1|grep cassandra` ]]
+then
+   machine="cassandra"
+   alias rm="rm -f"
+   alias cp="/bin/cp -f"
+   alias mv="mv -f"
+   envcondacm3=$HOME/.conda/envs/cmcc-cm_sps4
+   DIR_NEMO_REBUILD=$HOME/CMCC-CM//components/nemo/source/utils/py_nemo_rebuild/src/py_nemo_rebuild/
+   mpirun4py_nemo_rebuild=mpiexec.hydra
+   mpicmd=mpiexec.hydra
+   envcondanemo=$envcondacm3
+
 elif [[ -n `echo $PS1|grep zeus` ]]
 then
    machine="zeus"
@@ -32,7 +49,6 @@ PERT_NEMO_DATA=$DATA/EDA/pert_nemo/
 ERA5_DATA=$DATA/ERA5/input/oper_daily/ecm_mars
 OIS2_data="/data/cmcc/cp1/CPS/CMCC-OIS2/"
 OIS2_work="${WORK}/CPS/CMCC-OIS2"
-#OIS2_CASES="${OIS2_home}/exps"
 OIS2_WORK="$OIS2_work/run_oce_assim"
 DIR_CASES_OIS2="$OIS2_work/cases"
 nx=1440
@@ -65,8 +81,7 @@ sosie_exe=$OIS2_exe/sosie.x
 qs_exe=$OIS2_exe/td2qs.x
 FLANDREXE=$OIS2_exe/flandR.x
 FLANDREXESST=$OIS2_exe/flandR_sst_fill.x
-envcondaOIS2=/work/cmcc/ac28919/.coper
-envcondacm3=cmcc-cm_py39
+#envcondaOIS2=/work/cmcc/ac28919/.coper
 
 
 serialq_s=s_short

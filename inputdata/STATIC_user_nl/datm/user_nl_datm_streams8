@@ -31,7 +31,8 @@
 !      <file>foo3</file>
 !   </datafiles>
 !------------------------------------------------------------------------
-presaero.hist:datafiles =/work/cmcc/aspect/CESM2/inputdata/rof/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc
+!presaero.hist:datafiles =/work/cmcc/aspect/CESM2/inputdata/rof/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc
+presaero.hist:datafiles =/work/cmcc/cp1/CPS/CMCC-OIS2/inputdata/rof/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc
 ERA5.PREC:taxmode=cycle
 ERA5.PREC:tintalgo=linear
 ERA5.PREC:readmode=single

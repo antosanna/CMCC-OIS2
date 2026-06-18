@@ -8,7 +8,10 @@
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
 #. ~/load_conda
-. $DIR_UTIL_OIS2/load_sosie
+if [[ $machine == "juno" ]]
+then
+   . $DIR_UTIL_OIS2/load_sosie
+fi
 
 #conda activate /users_home/cmcc/sp1/.conda/envs/cmt_1.0
 #conda activate $envcondaOIS2
@@ -76,6 +79,15 @@ mkdir -p ${WORK_DIR}/${YY}
 mkdir -p ${WORK_DIR_ERR}/${YY}
 cp $OIS2_exe/sosie3.x ${WORK_DIR}/
 cp $OIS2_exe/sosie3.x ${WORK_DIR_ERR}/
+if [[ ! -f ${WORK_DIR}/mesh_out.nc ]]
+then
+    rsync -auv $OIS2_data/inputdata/SLA/static/mesh_out.nc ${WORK_DIR}
+fi
+if [[ ! -f ${WORK_DIR_ERR}/mesh_out.nc ]]
+then
+    rsync -auv $OIS2_data/inputdata/SLA/static/mesh_out.nc ${WORK_DIR_ERR}
+fi
+
 
 for listf in $(ls ${INDIR}/${YY}/nrt_global_allsat_phy_l4_${YY}${MM}*.nc);
 do   

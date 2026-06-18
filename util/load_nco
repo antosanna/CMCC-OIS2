@@ -14,15 +14,15 @@ if [[ "${machine}" == "zeus" ]] ; then
    export compress='ncks -O -L 4 -4 --no_abc'
    export compressC3S='ncks -Oh -L 4 -7 --no_abc'
 # to decompress/uncompress ncks -O -6
+elif [[ "${machine}" == "cassandra" ]] ; then 
+  
+   module load oneapi-2025.0.4/impi-2021.14.2/nco/5.2.4-5qire 
+
 elif [[ "${machine}" == "juno" ]] ; then 
   module load intel-2021.6.0/nco/5.0.6-jp6y4
-  export compress='ncks -O -L 4 -4 --no_abc'
-  export compressC3S='ncks -Oh -L 4 -7 --no_abc'
-# to decompress/uncompress ncks -O -6
 elif [[ "${machine}" == "leonardo" ]] ; then 
   . $DIR_UTIL/condaactivation.sh
   condafunction activate env_tools
-  export compress='ncks -O -L 4 -4'
 
   export MANPATH="/usr/local/share/man"
 
@@ -34,4 +34,7 @@ elif [[ "${machine}" == "leonardo" ]] ; then
      exit 1
   fi 
 fi 
+# to decompress/uncompress ncks -O -6
+export compress='ncks -O -L 4 -4 --no_abc'
+export compressC3S='ncks -Oh -L 4 -7 --no_abc'
 

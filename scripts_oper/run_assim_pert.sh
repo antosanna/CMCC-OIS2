@@ -163,11 +163,14 @@ if [ -d ${RUNDIR} ];then
      mkdir -p ${RUNDIR}
 else
      mkdir -p ${RUNDIR}
-fi 
+fi
+rundate=$( date -d "$startdate + $i days" +%Y%m%d )       # get $i days forward
+rundate1=$( date -d "$rundate" +%Y%m%d )                  # rundate in YYYYMMDD format
+
 while [ "${rundate1}" -lt "${enddate1}" ]; do
 
-   rundate=$( date -d "$startdate + $i days" +%Y%m%d )       # get $i days forward
-   rundate1=$( date -d "$rundate" +%Y%m%d )                  # rundate in YYYYMMDD format
+   #rundate=$( date -d "$startdate + $i days" +%Y%m%d )       # get $i days forward
+   #rundate1=$( date -d "$rundate" +%Y%m%d )                  # rundate in YYYYMMDD format
 
 
    DTG=$rundate1'00'
@@ -310,6 +313,8 @@ while [ "${rundate1}" -lt "${enddate1}" ]; do
       ln -fs ${WORKDIR}/${YMD}00/assim_ice/ANINCR.NC ${RUNDIR}/ANINCR_ICE.nc
    fi
 
+   ln -fs ${OIS2_work_inpdir}/STATIC_DA_NEMO42/INIT_MB0_stopack01/NEMO_clim_198801_199712_grid_U.nc ${RUNDIR}/uvel_yearlyclim.nc
+   ln -fs ${OIS2_work_inpdir}/STATIC_DA_NEMO42/INIT_MB0_stopack01/NEMO_clim_198801_199712_grid_V.nc ${RUNDIR}/vvel_yearlyclim.nc 
    ln -fs ${STATIC_DA}/dist.coast.nc ${RUNDIR}/dist.coast.nc
    cp ${STATIC_DA}/MDT.nc ${RUNDIR}/
    ncks -v bias  ${WORKDIR}/BIAS/SLA_BIAS_OMG_${YMD}.nc -A ${RUNDIR}/MDT.nc ||  { echo "no SLA BIAS, aborting!" ; exit 12 ; }
@@ -634,4 +639,13 @@ EOF
      runstatcycle=`cat ${EXPDIR}/runstatcycle`
 
      i=$(( i + $asm ))
+     rundate=$( date -d "$startdate + $i days" +%Y%m%d )       # get $i days forward
+     rundate1=$( date -d "$rundate" +%Y%m%d )                  # rundate in YYYYMMDD format
 done
+
+if [[ $rundate1 == $enddate1 ]] 
+then
+    title="[OIS2-$machine] ${EXPNAME} run completed up to $enddate"
+    body="The ${EXPNAME} analysis is completed up to $enddate. Restart files are in ${WORKDIR}/${DTG}/run"
+    ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "${body}" -t "${title}"
+fi 

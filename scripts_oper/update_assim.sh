@@ -5,8 +5,14 @@
 
 set -euvx
 typeofrun="RESUME"   #otherwise 1Start
-STARTDATE=20240914
-ENDDATE=`date +%Y%m%d`
+if [[ $machine == "juno" ]]
+then
+   STARTDATE=20240914
+elif [[ $machine == "cassandra" ]]
+then
+   STARTDATE=20260321
+fi
+ENDDATE=${1:-`date +%Y%m%d`}
 namelist=${OIS2_input}/STATIC_user_nl/NEMO42CICE6/ref/user_nl_nemo_assisla
 sed -e "s/dummy_startdate/$STARTDATE/g;s/dummy_enddate/$ENDDATE/g" $OIS2_scripts/run_assim_unperturbed.sh > $DIR_CASES_OIS2/OPSLAMB0/run_assim.sh;chmod u+x $DIR_CASES_OIS2/OPSLAMB0/run_assim.sh
 echo $typeofrun > $DIR_CASES_OIS2/OPSLAMB0/runstatcycle
@@ -31,6 +37,8 @@ do
    rsync -av  $OIS2_scripts/env_batch.xml $DIR_CASES_OIS2/OPSLAMB$member
    rsync -av  $OIS2_scripts/env_batch.xml $DIR_CASES_OIS2/OPSLAMB$member/LockedFiles
    rsync -av  $OIS2_scripts/env_workflow.xml $DIR_CASES_OIS2/OPSLAMB$member
+   rsync -av $OIS2_input/STATIC_user_nl/drof/user_nl_drof_streams $DIR_CASES_OIS2/OPSLAMB$member
+   rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm
    rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm
    if [[ $member -eq 0 ]] ; then
       rsync -av $OIS2_input/STATIC_user_nl/datm/user_nl_datm_streams$member $DIR_CASES_OIS2/OPSLAMB$member/user_nl_datm_streams

@@ -10,9 +10,6 @@ Then launch:
 
 import numpy as np
 import sys, os
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import netCDF4 as nc
 from datetime import datetime, timedelta
 import argparse
@@ -116,8 +113,8 @@ if __name__ == "__main__":
     sigma = 4 #std of the gaussian kernel to be used for smoothing
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s','--start', help='Starting date: date being processed minus N days. Formatted as %Y%m%d, e.g. 20211015.', required=True)
-    parser.add_argument('-e','--end', help='Ending date: date being processed plus M days. Formatted as %Y%m%d, e.g. 20211015.', required=True)
+    parser.add_argument('-s','--start', help='Starting date: date being processed minus N days. Formatted as %%Y%%m%%d, e.g. 20211015.', required=True)
+    parser.add_argument('-e','--end', help='Ending date: date being processed plus M days. Formatted as %%Y%%m%%d, e.g. 20211015.', required=True)
     parser.add_argument('-d','--dir-sla-unbias', help='Directory hosting output nc files.', required=True)
     parser.add_argument('-a','--arch-gofs-mesh', help='Directory hosting GOFS nc files.', required=True)
 
@@ -207,6 +204,9 @@ if __name__ == "__main__":
     print('Finished.\n')
     
     if debug:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt 
         
         print('spme plotting for debugging...')
         plt.figure(1); plt.imshow(np.flipud(sla[0, :, :]), vmin=-0.5, vmax=+0.5); plt.colorbar(); #plt.show(block=True)

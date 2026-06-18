@@ -7,7 +7,9 @@
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
 . $DIR_UTIL_OIS2/load_nco
-. $DIR_UTIL_OIS2/load_sosie
+if [[ $machine == "juno" ]] ; then
+   . $DIR_UTIL_OIS2/load_sosie
+fi
 set -xeuv
 
 if [[ $# -eq 0 ]]

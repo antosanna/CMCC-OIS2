@@ -53,4 +53,19 @@
       <queue walltimemin="04:00" walltimemax="08:00">p_long</queue>
     </queues>
   </batch_system>
+  <batch_system MACH="cassandra" type="lsf">
+    <batch_env>-env</batch_env>
+    <submit_args>
+      <arg flag="-q" name="$JOB_QUEUE"/>
+      <arg flag="-W" name="$JOB_WALLCLOCK_TIME"/>
+      <arg flag="-P" name="$PROJECT"/>
+      <arg flag="-M" name="300GB"/>
+      <arg flag="-x"/>
+    </submit_args>
+    <queues>
+      <queue walltimemin="00:00" walltimemax="02:00" default="true">p_short</queue>
+      <queue walltimemin="02:00" walltimemax="04:00">p_medium</queue>
+      <queue walltimemin="04:00" walltimemax="08:00">p_long</queue>
+    </queues>
+  </batch_system>
 </file>
