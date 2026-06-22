@@ -7,16 +7,18 @@ set -euvx
 [[ -s ${PREPOBS_config}/enddate_to_assim ]] || \
   { echo "No enddate_to_assim file, exiting!" ; exit 2 ; }
 
-END_DATE=$(date +%Y%m%d)00
+#END_DATE=$(date +%Y%m%d)00
+END_DATE=2026062000
 DTG=`cat ${PREPOBS_config}/enddate_to_assim`
-
-if [ $END_DATE -lt $DTG ]; then
+day_today=`date -d "${END_DATE:0:8}" +%w`
+if [ $END_DATE -lt $DTG ] && [ $day_today -ne 6 ]; then
    dir2copy=$DTG
-else #END_DATE -eq DTG
+else 
    #on saturday the preproc procedure update enddate_to_assim to be used starting from the following date
    file2read=`ls ${PREPOBS_config}/enddate_to_assim.* |tail -1`
    dir2copy=`cat $file2read` 
 fi
+echo $dir2copy
 
 WORKDIR=${PREPOBS_wdir}/$dir2copy/assim
 
