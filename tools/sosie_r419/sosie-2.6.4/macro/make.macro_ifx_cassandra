@@ -1,0 +1,23 @@
+# Makefile for SOSIE with Intel Ifort on Linux
+# ============================================
+#module load oneapi-2025.0.4/netcdf-fortran/4.6.1-k36gq    oneapi-2025.0.4/netcdf-c/4.9.2-hbdkx   oneapi-2025.0.4/netcdf-cxx/4.2-b74lv   oneapi-2025.0.4/gmake oneapi-2025.0.4
+
+# Fortran compiler:
+FC =  ifx -qopenmp 
+
+# Root directory for Netcdf:
+NETCDF_DIR = ${NETCDF_FORTRAN_HOME}
+
+# Linking argument:
+L_NCDF = -lnetcdf -lnetcdff
+
+# Debug flags:
+EXTRA_DEBUG_FLAGS = -g -check all -fpe0 -warn all -traceback -debug extended -C
+
+# Optimization flags:
+FF = -march=skylake-avx512 -O3 -i4 -module mod/
+#$(EXTRA_DEBUG_FLAGS) -module mod/
+
+# Install directory
+INSTALL_DIR = /usr/local
+

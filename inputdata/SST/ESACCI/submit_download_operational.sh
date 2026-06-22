@@ -49,6 +49,7 @@ python download_sst.py
 
 set +euvx
 . $DIR_UTIL_OIS2/load_nco
+. $DIR_UTIL_OIS2/load_flandR
 set -euvx
 
 dini=01

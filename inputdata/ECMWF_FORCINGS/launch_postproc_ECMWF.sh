@@ -15,12 +15,14 @@ then
 elif [[ $# -eq 1 ]]
 then
    YYMMDDend=$1
-   tmpdate=`ls $OIS2_work/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
+   #tmpdate=`ls $OIS2_work/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
+   tmpdate=`ls $OIS2_data/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
    yyyy=`echo $tmpdate|cut -c 2-5`;mm=`echo $tmpdate|cut -c 7-8`;dd=`echo $tmpdate|cut -c 10-11`
    YYMMDDini=$yyyy$mm$dd
 else
    YYMMDDend=`date +%Y%m%d -d "-3day"`  #download of data from mars completes by 10pm 2 days prior to today
-   tmpdate=`ls $OIS2_work/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
+   #tmpdate=`ls $OIS2_work/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
+   tmpdate=`ls $OIS2_data/ECMWF_FORCINGS/EDA/em_daily/ARCHIVE/*y????m??d??.nc|tail -1|rev|cut -d '.' -f2|cut -d '_' -f1|rev`   # get last processed date from files
    yyyy=`echo $tmpdate|cut -c 2-5`;mm=`echo $tmpdate|cut -c 7-8`;dd=`echo $tmpdate|cut -c 10-11`
    YYMMDDini=$yyyy$mm$dd
 fi

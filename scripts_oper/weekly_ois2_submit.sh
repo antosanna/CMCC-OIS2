@@ -17,6 +17,8 @@ exec 3>&1 1>>${LOG_FILE} 2>&1
 today_yy=`date +%Y`
 today_mm=`date +%m`
 today_dd=`date +%d`
+
+
 if [[ ${today_dd} == "01" ]] ; then
   #launched to produce forecast IC - checking the flag for reanalysis of 2 month before
   today_yymmm4rean=`date -d ' '${today_yy}${today_mm}15' - 2 month' +%Y%m` #`date +%Y%m -d "-2 month"`
@@ -56,6 +58,7 @@ else
    #1st of the month: last_avail_day is today (default enddate)
    last_avail_day=`date +%Y%m%d`
 fi
+
 # this variable is not used yet reminds how config is structured
 #saturday_before_starting_saturday=`date -d "$starting_saturday -7 days" +%Y%m%d`
 
@@ -63,8 +66,10 @@ fi
 jobsrunning=`$DIR_UTIL_OIS2/findjobs.sh -n OPSLAMB -c yes`
 # this step update ENDDATE in each run_assum script for every perturbation
 if [[ $jobsrunning -eq 0 ]] ; then
+   ${OIS2_scripts}/input2wois_operational.sh
    #DO THE UPDATE ONLY IF THERE ARE NO MEMBERS RUNNING
    $OIS2_scripts/update_assim.sh $last_avail_day
+
 fi
 
 #for member in 0 1 2 7 8

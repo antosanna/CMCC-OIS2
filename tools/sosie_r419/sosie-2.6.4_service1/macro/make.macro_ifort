@@ -1,0 +1,31 @@
+#Makefile for SOSIE with Intel Ifort on Linux
+# ============================================
+
+# Fortran compiler:
+# <<<<<<< .mine
+FC = ifort 
+#=======
+#FC = /opt/intel/compilers_and_libraries_2016.1.150/linux/bin/intel64/ifort
+#>>>>>>> .r419
+
+# Root directory for Netcdf:
+#<<<<<<< .mine
+NETCDF_DIR = ${NETCDF}
+#=======
+#NETCDF_DIR =/users/home/opt/netcdf/netcdf-4.3
+#>>>>>>> .r419
+
+# Linking argument: usually -lnetcdf or -lnetcdff (or both):
+L_NCDF = -lnetcdff
+
+
+
+# Fortran compilation flags:
+
+#EXTRA_DEBUG_FLAGS = -g -check all -fpe0 -warn all -traceback -debug extended -C
+
+FF =  -O3 -i4 $(EXTRA_DEBUG_FLAGS) -module mod/
+
+
+# Directory to install binaries:
+INSTALL_DIR = /usr/local

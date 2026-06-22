@@ -20,7 +20,7 @@ days_from_last_sunday=`date -d "$today" +%w`
 days_from_last_saturday=$(($days_from_last_sunday + 1))
 last_avail_saturday=`date -d "${today} - ${days_from_previous_saturday} days" +%Y%m%d`
 today_yymmm1=`date +%Y%m -d "-1 month"`
-if [[ ! -f $OIS2_logdir/EN4/donwload_${today_yymmm1}_ok ]]
+if [[ ! -f ${OIS2_data}/inputdata/EN4/donwload_${today_yymmm1}_ok ]]
 then
    echo "Today the OIS2 reanalysis cannot run since EN4 from previous month are not available. Exiting now" 
    exit 
@@ -30,7 +30,9 @@ then
    echo "The OIS2 reanalysis already submitted. Exiting now" 
    exit 
 fi
-  
+ 
+#to make/update links/files needed for runs starting from inputdata present on /data
+${OIS2_scripts}/input2wois_operational.sh 
 
 # this step update ENDDATE in each run_assum script for every perturbation
 $OIS2_scripts/update_assim.sh ${last_avail_saturday}

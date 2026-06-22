@@ -10,7 +10,7 @@ then
    STARTDATE=20240914
 elif [[ $machine == "cassandra" ]]
 then
-   STARTDATE=20260321
+   STARTDATE=20260425
 fi
 ENDDATE=${1:-`date +%Y%m%d`}
 namelist=${OIS2_input}/STATIC_user_nl/NEMO42CICE6/ref/user_nl_nemo_assisla

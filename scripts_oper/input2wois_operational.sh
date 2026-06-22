@@ -107,7 +107,7 @@ done
 ###INSITU/SLAOBS
 mkdir -p $OIS2_work_inpdir/data_preproc
 cd ${OIS2_data}/inputdata/data_preproc
-listad=`ls -d 2026????00`
+listad=`ls -d {${yym1},${yyyy}}????00`
 for dd in $listad
 do 
   rsync -auv  ${OIS2_data}/inputdata/data_preproc/$dd $OIS2_work_inpdir/data_preproc/.
@@ -115,16 +115,28 @@ done
 
 ###SIC
 mkdir -p $OIS2_work_inpdir/SIC/OSISAF
-rsync -auv ${OIS2_data}/inputdata/SIC/OSISAF/2026 $OIS2_work_inpdir/SIC/OSISAF/.
+rsync -auv ${OIS2_data}/inputdata/SIC/OSISAF/${yyyy} $OIS2_work_inpdir/SIC/OSISAF/.
+if [[ ${yym1} != ${yyyy} ]] 
+then
+  rsync -auv ${OIS2_data}/inputdata/SIC/OSISAF/${yym1} $OIS2_work_inpdir/SIC/OSISAF/.
+fi
 
 ###SLA-GRID
 mkdir -p $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla
-rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_err_sla/2026 $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla/.
 mkdir -p $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla
-rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_sla/2026 $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla/.
+rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_err_sla/${yyyy} $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla/.
+rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_sla/${yyyy} $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla/.
+if [[ ${yym1} != ${yyyy} ]]
+then
+   rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_err_sla/${yym1} $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_err_sla/.
+   rsync -auv ${OIS2_data}/inputdata/SLA/INTERP_SLA_eORCA025/cesm_sla/${yym1} $OIS2_work_inpdir/SLA/INTERP_SLA_eORCA025/cesm_sla/.
+fi
 
 ###SIT
 mkdir -p $OIS2_work_inpdir/SIT/CryoSat_SMOS_merged
-rsync -auv ${OIS2_data}/inputdata/SIT/CryoSat_SMOS_merged/2026 $OIS2_work_inpdir/SIT/CryoSat_SMOS_merged/.
-
+rsync -auv ${OIS2_data}/inputdata/SIT/CryoSat_SMOS_merged/${yyyy} $OIS2_work_inpdir/SIT/CryoSat_SMOS_merged/.
+if [[ ${yym1} != ${yyyy} ]]
+then
+   rsync -auv ${OIS2_data}/inputdata/SIT/CryoSat_SMOS_merged/${yym1} $OIS2_work_inpdir/SIT/CryoSat_SMOS_merged/.
+fi
 

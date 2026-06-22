@@ -9,7 +9,7 @@
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
 . $DIR_UTIL_OIS2/load_cdo
-
+. $DIR_UTIL_OIS2/load_libs4era5
 set -euvx
 
 

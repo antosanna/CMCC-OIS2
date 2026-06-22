@@ -8,10 +8,7 @@
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
 #. ~/load_conda
-if [[ $machine == "juno" ]]
-then
-   . $DIR_UTIL_OIS2/load_sosie
-fi
+. $DIR_UTIL_OIS2/load_sosie
 
 #conda activate /users_home/cmcc/sp1/.conda/envs/cmt_1.0
 #conda activate $envcondaOIS2

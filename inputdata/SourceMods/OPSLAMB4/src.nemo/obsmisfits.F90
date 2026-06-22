@@ -1405,11 +1405,16 @@ ALLOCATE(count(nprocs,NoFams))
         &sla%bcp(sla%no,nprd_sla),&
         &sla%tim(sla%no))
         allocate(sla%mdt(sla%no),sla%biasomg(sla%no) )
+        sla%mdt(:)=0._wp
+        sla%biasomg(:)=0._wp
         allocate(sla%moi(sla%no,npq) )
         allocate(sla%moj(sla%no,npq) )
         allocate(sla%sd1(sla%no) )
         allocate(sla%sd2(sla%no) )
-
+        sla%moi(:,:)=0._wp
+        sla%moj(:,:)=0._wp
+        sla%sd1(:)=0._wp
+        sla%sd2(:)=0._wp
   ENDIF
 
   sst%no=count(myproc,nnSST)

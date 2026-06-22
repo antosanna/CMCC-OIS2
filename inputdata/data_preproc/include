@@ -88,7 +88,7 @@ DA_STATIC_DIR=${STATIC_DIR}
 # Length of assim. window
 VAR_LENGTH=168
 # 3DVAR Executable, absolute path
-VAR_EXE=$DIR_PREPOBS/bin/var_3d_juno_mpi_sla_bia_lat_with_SLA_nemo42.x
+VAR_EXE=$DIR_PREPOBS/bin/var_3d_${machine}_mpi_sla_bia_lat_with_SLA_nemo42.x
 # 3DVAR Namelist
 VAR_NAMELIST=$DIR_PREPOBS/namelist_3dvar
 # PREPOBS Namelist

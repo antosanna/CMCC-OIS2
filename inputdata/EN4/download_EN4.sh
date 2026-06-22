@@ -88,7 +88,7 @@ for yymm in ${dd_m1} ${dd_m2}; do
        ln -sf $EN4_archdir/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
        cd  ${OTHER_STATIC_dir}/T3D
        ln -sf $EN4_archdir/votemper_EN4-ORCA025_y${y}m${mm}.nc   .
-       touch $OIS2_logdir/EN4/donwload_${yymm}_ok
+       touch ${OIS2_data}/inputdata/EN4/donwload_${yymm}_ok
    fi
 done
 #climatology anomaly is added to the previous month
