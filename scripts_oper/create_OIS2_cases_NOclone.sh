@@ -9,14 +9,13 @@ mkdir -p $OIS2_WORK        #####$OIS2_work/run_oce_assim
 mkdir -p $DIR_CASES_OIS2   #####$OIS2_work/cases
 
 YY=2026
-MM=03
-DD=28
+MM=04
+DD=25
 data=$YY$MM${DD}00
 data_format_cesm=$YY-$MM-$DD
 
 
-#for index in {0..8}
-for index in 1
+for index in {0..8}
 do
    if [[ $index -eq 0 ]] ; then
        cesmdir=$HOME/CMCC-CM_OIS2/CMCC-CM//cime/scripts	   

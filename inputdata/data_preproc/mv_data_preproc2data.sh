@@ -27,3 +27,4 @@ ARCHDIR=${OIS2_data}/inputdata/data_preproc/$dir2copy/
 mkdir -p ${ARCHDIR}
 
 rsync -auv $WORKDIR $ARCHDIR/.
+rsync -auv ${PREPOBS_config}/enddate_to_assim ${OIS2_data}/inputdata/data_preproc/

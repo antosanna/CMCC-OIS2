@@ -41,6 +41,11 @@ cd ${DIR_PREPOBS}
 
 MYCONF=102
 
+if [[ -f ${OIS2_data}/inputdata/data_preproc/enddate_to_assim ]]
+then
+  rsync -auv  ${OIS2_data}/inputdata/data_preproc/enddate_to_assim ${PREPOBS_config}/.
+fi
+
 [[ -s ${PREPOBS_config}/enddate_to_assim ]] || \
   { echo "No enddate_to_assim file, exiting!" ; exit 2 ; }
 

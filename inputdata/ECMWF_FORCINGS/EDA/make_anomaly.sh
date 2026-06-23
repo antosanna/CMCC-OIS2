@@ -25,7 +25,7 @@ vfinal=(`echo $tmp|tr ' ' '\n'`)
 
 cd $input_dir_out
 
-mkdir -p ../ANOM
+mkdir -p $OIS2_work/ECMWF_FORCINGS/EDA/${MEMB}_daily/ANOM
 
 YYMMDDini=$1
 YYMMDD=${YYMMDDini}
@@ -39,8 +39,9 @@ for par in `seq 0 $dim_m1` ; do
        if [[ -f ${input_dir_em_temp}/$fem ]] ; then
           mv ${input_dir_em_temp}/$fem ${input_dir_em}/
        fi
-   	   cdo sub $f ${input_dir_em}/$fem ../ANOM/ANOM_$f 
-       rm -f $f
+
        rsync -auv ${input_dir_em}/$fem $em_arch_dir
+   	   cdo sub $f ${em_arch_dir}/$fem $OIS2_work/ECMWF_FORCINGS/EDA/${MEMB}_daily/ANOM/ANOM_$f 
+       rm -f $f
 done
 

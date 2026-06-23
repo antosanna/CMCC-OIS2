@@ -648,4 +648,10 @@ then
     title="[OIS2-$machine] ${EXPNAME} run completed up to $enddate"
     body="The ${EXPNAME} analysis is completed up to $enddate. Restart files are in ${WORKDIR}/${DTG}/run"
     ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "${body}" -t "${title}"
+    mkdir -p ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/${DTG}
+    mkdir -p ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/${EADTG}
+    rsync -auv ${WORKDIR}/${DTG}/run ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/${DTG}/.
+    rsync -auv ${WORKDIR}/${EADTG}/assim_phy ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/${EADTG}/.
+    rsync -auv ${WORKDIR}/${EADTG}/assim_ice ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/${EADTG}/.
+    rsync -auv ${WORKDIR}/BIAS ${OIS2_data}/restart4backup/produced_on_${machine}/${EXPNAME}/.
 fi 
