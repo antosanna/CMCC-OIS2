@@ -7,8 +7,8 @@ set -euvx
 [[ -s ${PREPOBS_config}/enddate_to_assim ]] || \
   { echo "No enddate_to_assim file, exiting!" ; exit 2 ; }
 
-#END_DATE=$(date +%Y%m%d)00
-END_DATE=2026062000
+END_DATE=$(date +%Y%m%d)00
+#END_DATE=2026062000
 DTG=`cat ${PREPOBS_config}/enddate_to_assim`
 day_today=`date -d "${END_DATE:0:8}" +%w`
 if [ $END_DATE -lt $DTG ] && [ $day_today -ne 6 ]; then

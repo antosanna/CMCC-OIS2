@@ -18,7 +18,7 @@ saturday_before_starting_saturday=`date -d "$starting_saturday -7 days" +%Y%m%d`
 today=`date +%Y%m%d`
 days_from_last_sunday=`date -d "$today" +%w`
 days_from_last_saturday=$(($days_from_last_sunday + 1))
-last_avail_saturday=`date -d "${today} - ${days_from_previous_saturday} days" +%Y%m%d`
+last_avail_saturday=`date -d "${today} - ${days_from_last_saturday} days" +%Y%m%d`
 today_yymmm1=`date +%Y%m -d "-1 month"`
 if [[ ! -f ${OIS2_data}/inputdata/EN4/donwload_${today_yymmm1}_ok ]]
 then
