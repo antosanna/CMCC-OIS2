@@ -53,8 +53,9 @@ DTG=`cat ${PREPOBS_config}/enddate_to_assim`
 # end of present prepobs
 
 # today
-END_DATE=$(date +%Y%m%d)00
-
+date_tag=${1:-`date +%Y%m%d`}
+#END_DATE=$(date +%Y%m%d)00
+END_DATE=${date_tag}00
 # Go one step ahead
 # one week advancement $DTG + 7
 #DTG=`eval $ADDDTG $DTG +$VAR_LENGTH`

@@ -222,10 +222,16 @@ while [ $id -le $d2 ]; do
      ln -sf ice2_nh_${id}.nc OSISAF_nh_${id}.nc
     fi
 [[ -e "CRYO2-SMOS_MERGED_nh_${id}.nc" ]] && rm CRYO2-SMOS_MERGED_nh_${id}.nc
-n_fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v*_01_l4sit.nc|wc -l)
+
+#MB 20261016: we filter the Cryosat_data with _?_ for the mode tag (_r_/_o_) 
+#             Both _o_ and _r_ files exist (near realtime or reprocessed), but in principle for a given date in the archdir just one of them is present
+#             (in analysis we expect to use _o_, in the monthly reanalysis/long_analysis we can have a mix of _r_ and _o_)
+
+# W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_20260409_20260415_r_v300_01_l4sit.nc
+n_fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_?_v*_01_l4sit.nc|wc -l)
 if [[ $n_fief -ne 0 ]]
 then
-   fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_r_v*_01_l4sit.nc)
+   fief=$(ls ${CRYOSMOSARCHIV}/${yyosi}/W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_${id}_*_?_v*_01_l4sit.nc)
    cp $fief CRYO2-SMOS_MERGED_nh_${id}.nc #&& ncks -F -d xc,,,8 -d yc,,,5 CRYO2-SMOS_MERGED_nh_${id}.nc -O CRYO2-SMOS_MERGED_nh_${id}.nc
 fi
 

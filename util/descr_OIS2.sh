@@ -103,4 +103,5 @@ slaID="SC_sps35"
 apprun="sps35"
 mymail=sp1@cmcc.it
 
+EN4_day=16  #EN4 data assumed to be reliable in the second half of the month
 set +a

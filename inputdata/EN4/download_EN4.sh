@@ -7,9 +7,9 @@
 . ~/.bashrc
 . $DIR_UTIL_OIS2/descr_OIS2.sh
 . $DIR_UTIL_OIS2/load_nco
-if [[ $machine == "juno" ]] ; then
-   . $DIR_UTIL_OIS2/load_sosie
-fi
+#if [[ $machine == "juno" ]] ; then
+. $DIR_UTIL_OIS2/load_sosie
+#fi
 set -xeuv
 
 if [[ $# -eq 0 ]]
@@ -23,7 +23,7 @@ fi
 ytod=`date +%Y`
 mtod=`date +%m`
 dtod=`date +%d`
-if [[ ${ytod}${mtod} -eq ${y}${m} && $((10#$dtod)) -lt 16 ]]
+if [[ ${ytod}${mtod} -eq ${y}${m} && $((10#$dtod)) -lt ${EN4_day} ]]
 then
    echo "today is ${ytod}${mtod}${dtod} and EN4 data are not reliable even if available! Exiting now"
    exit 0

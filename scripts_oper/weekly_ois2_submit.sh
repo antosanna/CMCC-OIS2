@@ -48,8 +48,8 @@ if [[ $is_forecast -eq 0 ]] ; then
    last_avail_day=`date -d "- ${days_from_previous_saturday} days" +%Y%m%d`
 
 else
-   if [[ $days_from_previous_sunday -le 1 ]] ; then
-      # 1st of the month on Monday (last analysis run until two saturdays 
+   if [[ $days_from_previous_sunday -le 2 ]] ; then
+      # 1st of the month on Monday/Tuesday (last analysis run until two saturdays 
       # before e.g. forecast 20251201 last restart is 20251122)
       starting_saturday=`date -d "-$(($days_from_previous_saturday + 7)) days" +%Y%m%d`
    else
@@ -111,4 +111,15 @@ do
 
 done
 touch $checkfile
-
+exit
+# to be redesgined to decide how to discriminate between analysis and reanalysis outputs.
+if [[ $is_forecast -eq 0 ]]
+then
+   today=`date +%Y%m%d`
+   stdate=`date +%Y%m`
+   yyyy=`date -d "${today} + 1 day" +%Y`
+   mm=`date -d "${today} + 1 day" +%m`
+   dd=`date -d "${today} + 1 day" +%d`
+   dateLSF="$yyyy:$mm:$dd:09:00"
+   $DIR_UTIL/submitcommand.sh -m $machine -q $serialq_s -M 30000 -B $dateLSF -j daily_to_monthly$stdate -l $OIS2_home/logs/daily_to_monthly/daily_to_monthly$stdate -d $OIS2_home/postproc -s daily_to_monthly_operational.sh
+fi

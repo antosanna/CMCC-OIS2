@@ -23,7 +23,24 @@ today_yymmm1=`date +%Y%m -d "-1 month"`
 if [[ ! -f ${OIS2_data}/inputdata/EN4/donwload_${today_yymmm1}_ok ]]
 then
    echo "Today the OIS2 reanalysis cannot run since EN4 from previous month are not available. Exiting now" 
-   exit 
+   today_dd=`date -d "$today" +%d`
+   #sendmail notification only if today is after the expected day for EN4 availability
+   if [[ ${today_dd} -ge ${EN4_day} ]]
+   then
+        title="[OIS2-$machine] OIS2 reanalysis NOT starting - missing EN4 data"
+        body="OIS2 reanalysis cannot run since EN4 from previous month are not available yet, even if today is the ${today_dd} of the month.\n
+              Usually EN4 for the previous month are available between the 16th and the 24th of the current month.\n
+              \n
+              MISSING FILE: \n
+              https://www.metoffice.gov.uk/hadobs/en4/data/en4-2-1/EN.4.2.2.p.analysis.c14.${today_yymmm1}.nc.gz"
+         ${DIR_UTIL_OIS2}/sendmail.sh -m $machine -e $mymail -M "$body" -t "$title"
+   fi
+   day_successive_attempt=`date -d "${today} +1 day" +%d`
+   mon_successive_attempt=`date -d "${today} +1 day" +%m`
+   year_successive_attempt=`date -d "${today} +1 day" +%Y`
+   dateLSF="$year_successive_attempt:$mon_successive_attempt:$day_successive_attempt:09:00"
+   $DIR_UTIL_OIS2/submitcommand.sh -B $dateLSF -m $machine -q $serialq_l -j launch_successive_reanalyses_ois2_submit -l $OIS2_logdir/MONTHLY_SUBMISSION -d ${$OIS2_scripts} -s launch_successive_reanalyses_ois2_submit.sh
+   exit  1
 fi
 if [[ -f $OIS2_logdir/MONTHLY_SUBMISSION/reanalyses_${today_yymmm1}_submitted ]]
 then
@@ -61,3 +78,10 @@ do
 done
 touch $OIS2_logdir/MONTHLY_SUBMISSION/reanalyses_${today_yymmm1}_submitted
 
+today=`date +%Y%m%d`
+stdate=`date +%Y%m`
+yyyy=`date -d "${today} + 1 day" +%Y`
+mm=`date -d "${today} + 1 day" +%m`
+dd=`date -d "${today} + 1 day" +%d`
+dateLSF="$yyyy:$mm:$dd:09:00"
+$DIR_UTIL/submitcommand.sh -m $machine -q $serialq_s -M 30000 -B $dateLSF -j daily_to_monthly$stdate -l $OIS2_home/logs/daily_to_monthly/daily_to_monthly$stdate -d $OIS2_home/postproc -s daily_to_monthly_operational.sh
